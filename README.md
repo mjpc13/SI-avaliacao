@@ -1,6 +1,3 @@
 # SI-avaliacao
-Repository with all the codes used for the Informatics Systems class. first test of this
+Repository with all the codes used for the Informatics Systems class.
 
-
-olaolsdaoldsa
-dfasdfsgafgvcxgrtergfdjijubgcxtger
