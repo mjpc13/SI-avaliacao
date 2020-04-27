@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -62,7 +61,13 @@ public class Server {
 				dataOut.flush();
 				
 				String menu_answer = inputVerification(login_menu_options, dataIn, dataOut);
-				
+				float[][] stats = new float[8][3];
+				for(int i=0;i<8;i++){
+					stats[i][0]=0;
+					stats[i][1]=0;
+					stats[i][2]=0;
+				}
+
 				System.out.println("> the Client choose option "+menu_answer+") for the login menu"+"\n");
 				
 				if(menu_answer.equals("1") || menu_answer.equals("2") ) {
@@ -79,15 +84,16 @@ public class Server {
 					if(users_passwords.contains(credentials)) {
 						
 						boolean running=true;
-						
+						String show_stats="";
 						int[] game_conditions;
-						String[] main_menu_options = {"1","2","3"};
+						String[] main_menu_options = {"1","2","3","4"};
 						
 						while(running) { // ciclo infinito até o jogador carregar no 3 ( Exit )
 							
-							dataOut.writeUTF(separator+r+mainMenu());
+							dataOut.writeUTF(separator+r+show_stats+separator+mainMenu());
 							dataOut.flush();
 							r="";
+							show_stats="";
 							
 							
 							menu_answer = inputVerification(main_menu_options, dataIn, dataOut);
@@ -99,25 +105,19 @@ public class Server {
 								
 								long start = System.currentTimeMillis();
 								Date resultdate = new Date(start);
-								
+
+
 								System.out.println("> A new game was initiated at "+ resultdate+"\n");
 								System.out.println("> Initial Options:\n"
 										+" ".repeat(20)+"-> # of disks: "+game_conditions[0]+"\n"+" ".repeat(20)+"-> Initial Pole: "+game_conditions[1]+"\n"+" ".repeat(20)+"-> Final Pole: "
 												+ +game_conditions[2]+"\n");
 								
-								firstPlay(game_conditions, dataIn, dataOut);
+								stats=firstPlay(game_conditions, dataIn, dataOut, stats);
+								long end = System.currentTimeMillis();
+								Date enddate = new Date(end);
+								System.out.println("> The game was ended at "+ enddate+"\n");
 								
-								long elapsedTimeMillis = System.currentTimeMillis()-start;
 								
-								float elapsedTimeMin = elapsedTimeMillis/(60*1000F);
-								
-								int minutes=(int) Math.round(Math.floor(elapsedTimeMin));
-								
-								int seconds =(int) Math.round((elapsedTimeMin-minutes)*60*10)/10;
-								
-								System.out.println("In the last game you took " + minutes +" minutes "+ "and " + seconds + " seconds to complete or quit the game! \n \n");
-								
-								System.out.println("=".repeat(100) + "\n");
 								
 							}
 
@@ -126,6 +126,38 @@ public class Server {
 								r=separator+rules();	//mostra as regras do jogo
 							}
 							
+							else if(menu_answer.equals("3")){
+
+								// show stats
+								show_stats="";
+
+								for(int i=0;i<8;i++){
+
+									if(stats[i][1]!=0){
+										int j=i+3;
+										show_stats+="For "+j+" you have in average "+String.format("%.02f", stats[i][0])+
+										" moves, you played "+String.format("%.00f", stats[i][1])+" and quited "+String.format("%.00f", stats[i][2])+" times\n";
+
+									}
+
+
+								}
+
+								if(!show_stats.equals("")){
+									show_stats="Statistics:\n\n"+show_stats+"\n";
+									
+								}
+								else{
+									show_stats="Statistics:\n\n"+" Next time try to play first!! ;-) \n\n";
+									
+								}
+
+								
+								
+
+
+							}
+
 							else { //encerra o jogo
 								
 								System.out.println("> Client exit Main Menu\n");
@@ -265,7 +297,7 @@ public class Server {
 	
 	public static String mainMenu() {
 		
-		String main_menu = " ".repeat(46)+" Main Menu \n \n"+" ".repeat(46)+"1) New Game\n"+" ".repeat(46)+"2) Help \n"+" ".repeat(46)+"3) Log Out \n\n"
+		String main_menu = " ".repeat(46)+" Main Menu \n \n"+" ".repeat(46)+"1) New Game\n"+" ".repeat(46)+"2) Help \n"+" ".repeat(46)+"3) Stats \n"+" ".repeat(46)+"4) Log Out \n\n"
 				+ "==> ";
 		
 		return main_menu;
@@ -293,7 +325,7 @@ public class Server {
 				" ".repeat(15)+"<> Only one disk can be moved at a time.\n \n" + 
 				" ".repeat(15)+"<> Each move consists of taking the upper disk from one of the stacks and placing \n"
 				+ " ".repeat(12) + "it on top of another stack or on an empty rod.\n \n" + 
-				" ".repeat(15)+"<> No larger disk may be placed on top of a smaller disk.\n \n \n"+"=".repeat(100)+"\n".repeat(4);
+				" ".repeat(15)+"<> No larger disk may be placed on top of a smaller disk.\n \n \n";
 		
 		return rules;
 	}
@@ -490,7 +522,7 @@ public class Server {
 	}
 	
 	
-	public static void firstPlay(int[] initial_conditions,DataInputStream dataIn, DataOutputStream dataOut) throws IOException {
+	public static float[][] firstPlay(int[] initial_conditions,DataInputStream dataIn, DataOutputStream dataOut, float[][] stats) throws IOException {
 		String separator = "\n"+"=".repeat(100)+"\n\n";
 		int count1 = 0;
 		
@@ -501,12 +533,14 @@ public class Server {
 		dataOut.flush();
 		
 		
-		gamePlays(newBoard, initial_conditions, count1,dataIn,dataOut);
-	
+		stats=gamePlays(newBoard, initial_conditions, count1,dataIn,dataOut, stats);
+
+		return stats;
+
 	}
 	
 	
-	public static void gamePlays(String[][] board, int[] initial_conditions, int count1,DataInputStream dataIn, DataOutputStream dataOut) throws IOException {
+	public static float[][] gamePlays(String[][] board, int[] initial_conditions, int count1,DataInputStream dataIn, DataOutputStream dataOut, float[][] stats) throws IOException {
 		
 		String separator = "\n"+"=".repeat(100)+"\n\n";
 		int numberDisks=initial_conditions[0];
@@ -520,6 +554,9 @@ public class Server {
 		if(move.equalsIgnoreCase("Y")) {
 			System.out.println("> Client just quit the game ["+count1+"] \n");
 			System.out.println(" ".repeat(30)+"Why did you give up ? ◉_◉ \n \n");
+			stats[numberDisks-3][2]+=1;
+			stats[numberDisks-3][1]+=1;
+			return stats;
 		}
 		else {
 			System.out.println("> Client chose option "+move+") to move the disk ["+count1+"] \n");
@@ -528,10 +565,13 @@ public class Server {
 				
 			if(board[1][ending_pole*(width/3)-(width/6+1)].equals("*")) {
 				// o jogo acabou...	
-			
+				
+				stats[numberDisks-3][1]+=1;
+				stats[numberDisks-3][0]=(stats[numberDisks-3][0]*(stats[numberDisks-3][1]-stats[numberDisks-3][2]-1)+count1)/(stats[numberDisks-3][1]-stats[numberDisks-3][2]);
+
 				if(count1==Math.pow(2, numberDisks)-1) {
-						
-						
+					
+
 					dataOut.writeUTF(separator+printBoard(board)+"\n\n Excelent Job! You won the game in the perfect amount of moves! I am proud of you ♥‿♥  \n Number of moves: "
 					+ count1 + "\n Press any key to continue... \n\n==> ");
 					dataOut.flush();
@@ -539,20 +579,23 @@ public class Server {
 						
 				}
 				else {
-						
+
 					dataOut.writeUTF(separator+printBoard(board)+"\n\n You just won the game, but i believe you can do better! \\ (•◡•) /  \n Number of moves: "
 					+ count1 + "\n Press any key to continue... \n\n==> ");
 					dataOut.flush();
 					dataIn.readUTF();
+					
 				}
 				System.out.println("> Client just ended the game in "+count1+" moves\n");
+				return stats;
 			}
 				
 			else {
 				dataOut.writeUTF(separator+printBoard(board));
 				dataOut.flush();
 					
-				gamePlays(board,initial_conditions,count1,dataIn,dataOut);
+				stats=gamePlays(board,initial_conditions,count1,dataIn,dataOut,stats);
+				return stats;
 			}
 				
 		}

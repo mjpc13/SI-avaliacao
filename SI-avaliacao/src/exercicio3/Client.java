@@ -60,5 +60,7 @@ public class Client
 		dataOut.close();
 		dataIn.close();
 		socket.close();
+		scan.close();
 	}
+	
 }
