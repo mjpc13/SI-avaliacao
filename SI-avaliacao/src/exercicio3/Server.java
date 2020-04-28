@@ -305,7 +305,7 @@ public class Server {
 
 	public static String loginMenu() {
 		
-		String main_menu = " ".repeat(35)+" Welcome to our Hanoit tower game \n \n"+" ".repeat(46)+"1) Login\n"+" ".repeat(46)+"2) Sign Up \n"+" ".repeat(46)+"3) Exit \n\n"
+		String main_menu = " ".repeat(35)+" Welcome to our Hanoi tower game \n \n"+" ".repeat(46)+"1) Login\n"+" ".repeat(46)+"2) Sign Up \n"+" ".repeat(46)+"3) Exit \n\n"
 				+ "==> ";
 		
 		return main_menu;
