@@ -168,6 +168,17 @@ public class Server {
 						}
 						
 					}
+					else{
+
+						dataOut.writeUTF("> Wrong username or password \n > You just disconnected");
+						dataOut.flush();
+					
+					System.out.println("> Client Disconected, wrong credentials");
+					System.out.println("-".repeat(100)+"\n");
+					
+					connected=false;
+
+					}
 
 				}
 				else {
@@ -356,18 +367,14 @@ public class Server {
 			if(!valid) {
 				
 				String invalid_submission=" ".repeat(35)+"Please insert a valid option... ¯\\_(ツ)_/¯ \n\n ==> ";  // se não for válido o ciclo repete
+				System.out.println("> Cliente inserted an invalid option");
 				dataOut.writeUTF(separators+invalid_submission);
 				dataOut.flush();
 
 			}
 			
 		}
-		
-		//System.out.println("=".repeat(100));
-		//System.out.println("\n".repeat(2));
-		
 		return response;
-		
 	}
 
 	public static int[] newGame(DataInputStream dataIn, DataOutputStream dataOut) throws IOException {
@@ -553,7 +560,6 @@ public class Server {
 			
 		if(move.equalsIgnoreCase("Y")) {
 			System.out.println("> Client just quit the game ["+count1+"] \n");
-			System.out.println(" ".repeat(30)+"Why did you give up ? ◉_◉ \n \n");
 			stats[numberDisks-3][2]+=1;
 			stats[numberDisks-3][1]+=1;
 			return stats;
@@ -627,7 +633,10 @@ public class Server {
 
 	public static ArrayList<String> signUp(ArrayList<String> users_passwords,DataInputStream dataIn, DataOutputStream dataOut) throws IOException{
 		
-		users_passwords.add(login(dataIn,dataOut));
+	String new_user =login(dataIn,dataOut)
+
+		System.out.println("> New user register: "+new_user);
+		users_passwords.add(new_user);
 		
 		return users_passwords;
 
