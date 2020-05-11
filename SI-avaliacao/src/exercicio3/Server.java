@@ -170,7 +170,7 @@ public class Server {
 					}
 					else{
 
-						dataOut.writeUTF("> Wrong username or password \n > You just disconnected");
+						dataOut.writeUTF("> Wrong username or password \n> You just disconnected");
 						dataOut.flush();
 					
 					System.out.println("> Client Disconected, wrong credentials");
