@@ -12,6 +12,7 @@ public class User implements Serializable {
 
     private String nome, mail, password, afi;
     private ArrayList<Publication> listPubs;
+    private int totalCitations;
 
     public User(String nome2, String mail2, String password2, String afi2) {
 
@@ -19,6 +20,7 @@ public class User implements Serializable {
         this.mail = mail2;
         this.nome = nome2;
         this.password = password2;
+        this.totalCitations = 0;
 
     }
 
@@ -88,6 +90,7 @@ public class User implements Serializable {
     public void addPublication(Publication pub) {
 
         listPubs.add(pub);
+        totalCitations += pub.getCitacoes();
 
     }
 
@@ -107,15 +110,33 @@ public class User implements Serializable {
 
     }
 
-    public void removePublication() {
+    public void removePublication(ArrayList<Integer> listOfDoi) {
 
-        Scanner sc = new Scanner(System.In);
+        for (Publication pub : listPubs) {
 
-        for (int i = 0; i < listPubs.size(); i++) {
+            if (listOfDoi.contains(pub.getDOI())) {
 
-            System.out.println(i + ") " + listPubs.get(i));
+                listPubs.remove(pub); // posso ter que meter um for normal
+
+            }
 
         }
+
+    }
+
+    public void showStats() {
+
+        int i10 = 0;
+
+        for (Publication pub : listPubs) {
+
+            if (pub.getCitacoes() >= 10) {
+                i10 += 1;
+            }
+
+        }
+
+        // E não entendo o que é o H
 
     }
 
