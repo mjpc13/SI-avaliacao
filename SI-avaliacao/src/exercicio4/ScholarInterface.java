@@ -13,4 +13,8 @@ public interface ScholarInterface {
 
     public User getUserData() throws Exception;
 
+    public boolean addNewUser() throws Exception;
+
+    public boolean loginVerification() throws Exception;
+
 }
