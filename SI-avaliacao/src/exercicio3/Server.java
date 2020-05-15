@@ -633,7 +633,7 @@ public class Server {
 
 	public static ArrayList<String> signUp(ArrayList<String> users_passwords,DataInputStream dataIn, DataOutputStream dataOut) throws IOException{
 		
-	String new_user =login(dataIn,dataOut)
+		String new_user =login(dataIn,dataOut);
 
 		System.out.println("> New user register: "+new_user);
 		users_passwords.add(new_user);
