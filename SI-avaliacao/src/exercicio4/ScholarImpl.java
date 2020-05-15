@@ -6,7 +6,15 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class ScholarImpl implements ScholarInterface {
+public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface {
+
+    private FileManagement fm;
+
+    protected ScholarImpl(FileManagement fm) throws RemoteException {
+        // super();
+        this.fm = fm;
+        // TODO Auto-generated constructor stub
+    }
 
     public ArrayList<Publication> getPublications() throws Exception {
         // TODO Auto-generated method stub

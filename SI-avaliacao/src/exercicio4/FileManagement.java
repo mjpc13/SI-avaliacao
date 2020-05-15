@@ -9,12 +9,20 @@ import java.util.ArrayList;
 
 public class FileManagement implements java.io.Serializable {
 
+    private ArrayList<Publication> pub_list;
+    private ArrayList<User> user_list;
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = -8121895196637993258L;
+
     public ArrayList<Publication> readPublications() {
 
         try (FileInputStream fis = new FileInputStream("pubs.tmp")) {
             ObjectInputStream ois = new ObjectInputStream(fis);
 
-            ArrayList<Publication> pub_list = (ArrayList<Publication>) ois.readObject();
+            this.pub_list = (ArrayList<Publication>) ois.readObject();
 
             ois.close();
             return pub_list;
