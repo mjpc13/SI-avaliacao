@@ -8,10 +8,13 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 357697766690449964L;
     private FileManagement fm;
 
     protected ScholarImpl(FileManagement fm) throws RemoteException {
-        // super();
         this.fm = fm;
         // TODO Auto-generated constructor stub
     }
@@ -19,9 +22,7 @@ public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface
     public ArrayList<Publication> getPublications() throws Exception {
         // TODO Auto-generated method stub
 
-        FileManagement fm = new FileManagement();
-
-        ArrayList<Publication> pub_list = fm.readPublications();
+        ArrayList<Publication> pub_list = fm.getPub_list();
 
         return pub_list;
     }
@@ -29,9 +30,8 @@ public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface
     public boolean addNewPublication(ArrayList<String> autores, String titulo, int ano, String revista, String volume,
             int numero, String pagina, int citacoes) throws Exception {
         // TODO Auto-generated method stub
-        FileManagement fm = new FileManagement();
 
-        ArrayList<Publication> pubs_list = fm.readPublications();
+        ArrayList<Publication> pubs_list = fm.getPub_list();
 
         String id = "";
         for (String str : autores) {
@@ -52,7 +52,7 @@ public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface
 
         pubs_list.add(pub);
 
-        fm.writePublications(pubs_list);
+        fm.addPublication(pub);
 
         return true;
     }
@@ -60,9 +60,7 @@ public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface
     public User getUserData(String mail) throws Exception {
         // TODO Auto-generated method stub
 
-        FileManagement fm = new FileManagement();
-
-        ArrayList<User> user_list = fm.readUsers();
+        ArrayList<User> user_list = fm.getUser_list();
 
         for (User user : user_list) {
             if (user.getMail().equals(mail)) {
@@ -78,9 +76,7 @@ public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface
     public boolean addNewUser(String nome, String mail, String password, String afi) throws Exception {
         // TODO Auto-generated method stub
 
-        FileManagement fm = new FileManagement();
-
-        ArrayList<User> user_list = fm.readUsers();
+        ArrayList<User> user_list = fm.getUser_list();
 
         for (User user : user_list) {
 
@@ -92,9 +88,7 @@ public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface
 
         User user = new User(nome, mail, password, afi);
 
-        user_list.add(user);
-
-        fm.writeUsers(user_list);
+        fm.addUser(user);
 
         return true;
     }
@@ -102,9 +96,7 @@ public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface
     public boolean loginVerification(String mail, String password) throws Exception {
         // TODO Auto-generated method stub
 
-        FileManagement fm = new FileManagement();
-
-        ArrayList<User> user_list = fm.readUsers();
+        ArrayList<User> user_list = fm.getUser_list();
 
         for (User user : user_list) {
             if (user.getMail().equals(mail) && user.getPassword().equals(password)) {

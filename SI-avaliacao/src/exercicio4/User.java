@@ -2,8 +2,12 @@ package exercicio4;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class User implements Serializable {
+
+    private static final long serialVersionUID = 8306809467553336903L;
 
     private String nome, mail, password, afi;
     private ArrayList<Publication> listPubs;
@@ -78,6 +82,40 @@ public class User implements Serializable {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void addPublication(Publication pub) {
+
+        listPubs.add(pub);
+
+    }
+
+    public void printPublications(boolean by_year) {
+
+        if (by_year) {
+            Collections.sort(listPubs, new SortbyYear());
+        } else {
+            Collections.sort(listPubs, new SortbyCitation());
+        }
+
+    }
+
+    class SortbyYear implements Comparator<Publication> {
+        // Used for sorting in ascending order of
+        // roll number
+        public int compare(Publication a, Publication b) {
+            return a.getAno() - b.getAno();
+        }
+    }
+
+    class SortbyCitation implements Comparator<Publication> {
+        // Used for sorting in ascending order of
+        // roll number
+        public int compare(Publication a, Publication b){
+
+                return a.getCitacoes() b.getCitacoes(); 
+
+            }
     }
 
 }

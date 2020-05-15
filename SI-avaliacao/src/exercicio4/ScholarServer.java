@@ -9,6 +9,10 @@ public class ScholarServer {
 	public static void main(String[] args) {
 		try {
 			FileManagement fm = new FileManagement();
+
+			fm.readPublications(); // lê os ficheiros das publicações e dos Usuários;
+			fm.readUsers();
+
 			ScholarImpl obj = new ScholarImpl(fm);
 
 			// we programmatically create the registry. The following method creates and

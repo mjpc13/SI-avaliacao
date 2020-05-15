@@ -12,12 +12,9 @@ public class FileManagement implements java.io.Serializable {
     private ArrayList<Publication> pub_list;
     private ArrayList<User> user_list;
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -8121895196637993258L;
 
-    public ArrayList<Publication> readPublications() {
+    public void readPublications() {
 
         try (FileInputStream fis = new FileInputStream("pubs.tmp")) {
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -25,23 +22,22 @@ public class FileManagement implements java.io.Serializable {
             this.pub_list = (ArrayList<Publication>) ois.readObject();
 
             ois.close();
-            return pub_list;
 
         } catch (ClassCastException | ClassNotFoundException | IOException e) {
             // ficheiro nao encontrado ou dados corrompidos
-
+            this.pub_list = new ArrayList<>();
             System.out.println("> Nao foram encontrados dados guardados: foi criado um novo ficheiro");
-            writePublications(null); // escreve dados atuais no disco
-            return null;
+            writePublications(); // escreve dados atuais no disco
+
         }
 
     }
 
-    public void writePublications(ArrayList<Publication> Pubs) {
+    public void writePublications() {
 
         try (FileOutputStream fos = new FileOutputStream("pubs.tmp")) {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(Pubs);
+            oos.writeObject(pub_list);
             oos.close();
 
         } catch (Exception e) {
@@ -50,31 +46,29 @@ public class FileManagement implements java.io.Serializable {
 
     }
 
-    public ArrayList<User> readUsers() {
+    public void readUsers() {
 
         try (FileInputStream fis = new FileInputStream("users.tmp")) {
             ObjectInputStream ois = new ObjectInputStream(fis);
 
-            ArrayList<User> user_list = (ArrayList<User>) ois.readObject();
+            this.user_list = (ArrayList<User>) ois.readObject();
 
             ois.close();
-            return user_list;
 
         } catch (ClassCastException | ClassNotFoundException | IOException e) {
             // ficheiro nao encontrado ou dados corrompidos
-
+            this.user_list = new ArrayList<>();
             System.out.println("> Nao foram encontrados dados guardados: foi criado um novo ficheiro");
-            writePublications(null); // escreve dados atuais no disco
-            return null;
+            writePublications(); // escreve dados atuais no disco
         }
 
     }
 
-    public void writeUsers(ArrayList<User> users) {
+    public void writeUsers() {
 
         try (FileOutputStream fos = new FileOutputStream("users.tmp")) {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(users);
+            oos.writeObject(user_list);
             oos.close();
 
         } catch (IOException e) { // erro na serializacao do objeto
@@ -83,4 +77,27 @@ public class FileManagement implements java.io.Serializable {
 
     }
 
+    /**
+     * @return the pub_list
+     */
+    public ArrayList<Publication> getPub_list() {
+        return pub_list;
+    }
+
+    /**
+     * @return the user_list
+     */
+    public ArrayList<User> getUser_list() {
+        return user_list;
+    }
+
+    public void addPublication(Publication pub) {
+
+        this.pub_list.add(pub);
+
+    }
+
+    public void addUser(User u) {
+        this.user_list.add(u);
+    }
 }

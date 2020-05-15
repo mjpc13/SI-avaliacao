@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Publication implements Serializable {
 
+    private static final long serialVersionUID = -8919133980077941736L;
     private String titulo, revista, volume, paginas;
     private int DOI;
     private int ano, numero, citacoes;
@@ -21,6 +22,8 @@ public class Publication implements Serializable {
         this.numero = numero;
         this.paginas = pagina;
         this.setCitacoes(citacoes);
+
+        // para fazer o DOI
 
         String id = "";
 
@@ -140,7 +143,21 @@ public class Publication implements Serializable {
     /**
      * @return the dOI
      */
-    public String getDOI() {
+    public int getDOI() {
         return DOI;
+    }
+
+    public String toString() {
+
+        String print = "";
+
+        for (String string : listaAutores) {
+            print = print + string + "; ";
+        }
+
+        print += titulo + ", " + String.valueOf(ano) + ", " + revista + ", " + volume + ", " + String.valueOf(numero)
+                + ", " + paginas + ", " + citacoes + ", " + String.valueOf(DOI);
+
+        return print;
     }
 }
