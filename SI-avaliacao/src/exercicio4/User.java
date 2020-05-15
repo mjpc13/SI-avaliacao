@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Scanner;
 
 public class User implements Serializable {
 
@@ -96,6 +97,24 @@ public class User implements Serializable {
             Collections.sort(listPubs, new SortbyYear());
         } else {
             Collections.sort(listPubs, new SortbyCitation());
+        }
+
+        for (int i = 0; i < listPubs.size(); i++) {
+
+            System.out.println(i + ") " + listPubs.get(i));
+
+        }
+
+    }
+
+    public void removePublication() {
+
+        Scanner sc = new Scanner(System.In);
+
+        for (int i = 0; i < listPubs.size(); i++) {
+
+            System.out.println(i + ") " + listPubs.get(i));
+
         }
 
     }
