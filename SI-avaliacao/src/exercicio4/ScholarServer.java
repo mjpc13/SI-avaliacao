@@ -4,10 +4,10 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-public class MathServer {
+public class ScholarServer {
 	public static void main(String[] args) {
 		try {
-			MathImpl obj = new MathImpl();
+			ScholarImpl obj = new ScholarImpl();
 
 			// we programmatically create the registry. The following method creates and
 			// exports a Registry instance
@@ -23,7 +23,7 @@ public class MathServer {
 		{ // usually it is advisable to use multiple catch blocks and perform different
 			// error handling actions
 			// depending on the specific exception type caught
-			System.err.println("Ocorreu um erro:");
+			System.err.println("Ocorreu um erro: ");
 			e.printStackTrace(); // prints detailed information about the exception
 		}
 	}
