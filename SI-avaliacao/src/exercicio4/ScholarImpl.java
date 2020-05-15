@@ -8,9 +8,6 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 357697766690449964L;
     private FileManagement fm;
 
@@ -23,12 +20,12 @@ public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface
         // TODO Auto-generated method stub
 
         ArrayList<Publication> pub_list = fm.getPub_list();
-
         return pub_list;
+
     }
 
     public boolean addNewPublication(ArrayList<String> autores, String titulo, int ano, String revista, String volume,
-            int numero, String pagina, int citacoes) throws Exception {
+            int numero, String pagina, int citacoes, User user) throws Exception {
         // TODO Auto-generated method stub
 
         ArrayList<Publication> pubs_list = fm.getPub_list();
@@ -42,18 +39,20 @@ public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface
 
         for (Publication pub : pubs_list) {
 
-            if (pub.getDOI().equals(doi)) {
-                return false;
+            if (pub.getDOI() == doi) { // significa que já existe uma pub com este doi ou seja a publicação já existe
+                return false; // nesse caso rejeita a adição e dá return de False para dps ser processado pelo
+                              // código no Cliente
             }
 
         }
 
-        Publication pub = new Publication(autores, titulo, ano, revista, volume, numero, pagina, citacoes);
+        Publication pub = new Publication(autores, titulo, ano, revista, volume, numero, pagina, citacoes); // cria a
+                                                                                                            // publicação
+                                                                                                            // a ser
+                                                                                                            // adicionada
 
-        pubs_list.add(pub);
-
-        fm.addPublication(pub);
-
+        fm.addPublication(pub); // adiciona a publicação a lista que contem TODAS as pubs, e envia TRUE;
+        user.addPublication(pub); // adiciona a publicação a lista de pubs daquele usuário;
         return true;
     }
 
@@ -80,13 +79,14 @@ public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface
 
         for (User user : user_list) {
 
-            if (user.getMail().equals(mail)) {
+            if (user.getMail().equals(mail)) { // se já existir um user com aquele email, não é permitido criar um novo
+                                               // user com estas informações
                 return false;
             }
 
         }
 
-        User user = new User(nome, mail, password, afi);
+        User user = new User(nome, mail, password, afi); // caso contrário criamos um usuário e adicionamos ao ficheiro
 
         fm.addUser(user);
 
@@ -101,11 +101,11 @@ public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface
         for (User user : user_list) {
             if (user.getMail().equals(mail) && user.getPassword().equals(password)) {
 
-                return true;
+                return true; // a autenticação é válida
             }
         }
 
-        return false;
+        return false; // falhou na palavra pass ou no usuário
 
     }
 
