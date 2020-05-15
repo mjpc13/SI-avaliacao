@@ -8,6 +8,15 @@ public class User implements Serializable {
     private String nome, mail, password, afi;
     private ArrayList<Publication> listPubs;
 
+    public User(String nome2, String mail2, String password2, String afi2) {
+
+        this.afi = afi2;
+        this.mail = mail2;
+        this.nome = nome2;
+        this.password = password2;
+
+    }
+
     /**
      * @return the afi
      */

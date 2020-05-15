@@ -7,7 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-public class FileManagement {
+public class FileManagement implements java.io.Serializable {
 
     public ArrayList<Publication> readPublications() {
 
@@ -36,7 +36,7 @@ public class FileManagement {
             oos.writeObject(Pubs);
             oos.close();
 
-        } catch (IOException e) { // erro na serializacao do objeto
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

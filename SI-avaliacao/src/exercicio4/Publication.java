@@ -6,9 +6,39 @@ import java.util.ArrayList;
 public class Publication implements Serializable {
 
     private String titulo, revista, volume, paginas;
-    private String DOI;
-    private int ano, numero;
+    private int DOI;
+    private int ano, numero, citacoes;
     private ArrayList<String> listaAutores = new ArrayList<>();
+
+    public Publication(ArrayList<String> autores, String titulo, int ano, String revista, String volume, int numero,
+            String pagina, int citacoes) {
+
+        this.listaAutores = autores;
+        this.titulo = titulo;
+        this.revista = revista;
+        this.volume = volume;
+        this.ano = ano;
+        this.numero = numero;
+        this.paginas = pagina;
+        this.setCitacoes(citacoes);
+
+        String id = "";
+
+        for (String str : autores) {
+            id = id + str;
+        }
+        id = id + titulo + revista + volume + pagina;
+        this.DOI = id.hashCode();
+
+    }
+
+    public int getCitacoes() {
+        return citacoes;
+    }
+
+    public void setCitacoes(int citacoes) {
+        this.citacoes = citacoes;
+    }
 
     /**
      * @return the titulo
@@ -107,4 +137,10 @@ public class Publication implements Serializable {
 
     }
 
+    /**
+     * @return the dOI
+     */
+    public String getDOI() {
+        return DOI;
+    }
 }

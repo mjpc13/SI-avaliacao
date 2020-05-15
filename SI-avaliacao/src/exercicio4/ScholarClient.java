@@ -12,7 +12,7 @@ public class ScholarClient {
 
 			// 'lookup' returns the remote reference bound to the specified name in this
 			// registry.
-			ScholarInterface sch = (ScholarInterface) registry.lookup("calculadora");
+			ScholarInterface sch = (ScholarInterface) registry.lookup("test");
 
 			// let's execute our remote operation and keep the return value in 'result'!
 

@@ -1,5 +1,6 @@
 package exercicio4;
 
+import java.io.IOException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -17,8 +18,9 @@ public class ScholarServer {
 			Registry registry = LocateRegistry.createRegistry(1099);
 
 			// Question: could we use rebind here?
-			registry.bind("calculadora", obj);
-
+			registry.bind("test", obj);
+			while (true) {
+			}
 		} catch (Exception e) // catching Exception means that we are handling all errors in the same block
 		{ // usually it is advisable to use multiple catch blocks and perform different
 			// error handling actions
