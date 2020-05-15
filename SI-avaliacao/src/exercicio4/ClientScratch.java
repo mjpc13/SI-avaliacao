@@ -14,7 +14,11 @@ public class ClientScratch {
 
         if(menu1.equals("1")){
             System.out.println("=".repeat(20) + "Register:" + "=".repeat(20));
-            System.out.println("Email:");
+            
+            System.out.println("Name: ");
+            String name = scan.nextLine();
+            
+            System.out.println("Email: ");
             String email = scan.nextLine();
 
             while((email.contains("@") && email.contains(".")) == false){
@@ -24,7 +28,10 @@ public class ClientScratch {
             System.out.println("Password: ");
             String password = scan.nextLine();
 
-            // addNewuser(email,password);
+            System.out.println("Afi: ");
+            String afi = scan.nextLine();
+
+            // addNewuser(name,email,password,afi);
         } 
         else if(menu1.equals("2")){
             System.out.println("=".repeat(20) + "Login:" + "=".repeat(20));
