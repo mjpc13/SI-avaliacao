@@ -71,7 +71,7 @@ public class FileManagement implements java.io.Serializable {
             oos.writeObject(user_list);
             oos.close();
 
-        } catch (IOException e) { // erro na serializacao do objeto
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

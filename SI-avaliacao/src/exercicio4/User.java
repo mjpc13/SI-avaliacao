@@ -138,6 +138,7 @@ public class User implements Serializable {
 
         // E não entendo o que é o H
 
+        System.out.println(i10);
     }
 
     class SortbyYear implements Comparator<Publication> {

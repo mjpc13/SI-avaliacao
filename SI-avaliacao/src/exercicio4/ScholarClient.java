@@ -40,7 +40,7 @@ public class ScholarClient {
 				System.out.println("Password: ");
 				String password = scan.nextLine();
 
-				System.out.println("Afi: ");
+				System.out.println("Afiliações: ");
 				String afi = scan.nextLine();
 
 				// addNewuser(name,email,password,afi);
