@@ -28,21 +28,22 @@ public class ScholarClient {
 				System.out.println("=".repeat(20) + "Register:" + "=".repeat(20));
 
 				System.out.println("Name: ");
+				System.out.print("==> ");
 				String name = scan.nextLine();
-				scan.nextLine();
 
-				String email = emailInput();
+				String email = emailInput(scan);
 
 				System.out.println("Password: ");
+				System.out.print("==> ");
 				String password = scan.nextLine();
 
 				System.out.println("Afiliações: ");
+				System.out.print("==> ");
 				String afi = scan.nextLine();
 
-				if(sch.addNewUser(name,email,password,afi)){
+				if (sch.addNewUser(name, email, password, afi)) {
 					System.out.println("User Successfully Registered!");
-				}
-				else {
+				} else {
 					System.out.println("This user already exists.");
 				}
 
@@ -55,24 +56,30 @@ public class ScholarClient {
 				// // scan.nextLine();
 
 				// while (!sch.loginVerification(email, password)) {
-				// 	System.out.println("Invalid user. Please try again.");
+				// System.out.println("Invalid user. Please try again.");
 
-				// 	email = emailInput();
+				// email = emailInput();
 
-				// 	System.out.println("Password: ");
-				// 	password = scan.nextLine();
+				// System.out.println("Password: ");
+				// password = scan.nextLine();
 				// }
 
 				// System.out.println("Login Successful.");
 
 			}
-			
-			else if (menu1.equals("2")) {
-				System.out.println("=".repeat(20) + "Login:" + "=".repeat(20));
 
+			else if (menu1.equals("2")) {
+				System.out.println("=".repeat(20) + " Login: " + "=".repeat(20));
+
+				String email = emailInput(scan);
+				// scan.nextLine();
+
+<<<<<<< HEAD
 				String email = emailInput();
 				scan.nextLine();
 
+=======
+>>>>>>> c0a2717a95b46c737ee254ada152abd329948bfe
 				System.out.println("Password: ");
 				String password = scan.nextLine();
 				// scan.nextLine();
@@ -80,7 +87,7 @@ public class ScholarClient {
 				while (!sch.loginVerification(email, password)) {
 					System.out.println("Invalid user. Please try again.");
 
-					email = emailInput();
+					email = emailInput(scan);
 
 					System.out.println("Password: ");
 					password = scan.nextLine();
@@ -183,9 +190,10 @@ public class ScholarClient {
 
 	}
 
-	public static String emailInput() {
-		Scanner scan = new Scanner(System.in);
+	public static String emailInput(Scanner scan) {
+
 		System.out.println("Email: ");
+		System.out.print("==> ");
 		String email = scan.nextLine();
 
 		while ((email.contains("@") && email.contains(".")) == false) {

@@ -40,8 +40,11 @@ public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface
         for (Publication pub : pubs_list) {
 
             if (pub.getDOI() == doi) { // significa que já existe uma pub com este doi ou seja a publicação já existe
-                return false; // nesse caso rejeita a adição e dá return de False para dps ser processado pelo
-                              // código no Cliente
+                                       // nesse caso rejeita a adição e dá return de False para dps ser processado pelo
+                                       // código no Cliente
+
+                System.out.println("> A publicação que inseriu já se encontra no sistema");
+                return false;
             }
 
         }
@@ -53,6 +56,7 @@ public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface
 
         fm.addPublication(pub); // adiciona a publicação a lista que contem TODAS as pubs, e envia TRUE;
         user.addPublication(pub); // adiciona a publicação a lista de pubs daquele usuário;
+        fm.writePublications(); // escreve no ficheiro a nova lista de Publications
         return true;
     }
 
@@ -94,20 +98,21 @@ public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface
         return true;
     }
 
-    public boolean loginVerification(String mail, String password) throws Exception {
-        // TODO Auto-generated method stub
+    // TODO Auto-generated method stub
 
-        ArrayList<User> user_list = fm.getUser_list();
+    ArrayList<User> user_list = fm.getUser_list();
 
-        for (User user : user_list) {
-            if (user.getMail().equals(mail) && user.getPassword().equals(password)) {
+    for(
+    User user:user_list)
+    {
+        if (user.getMail().equals(mail) && user.getPassword().equals(password)) {
 
-                return true; // a autenticação é válida
-            }
+            return true; // a autenticação é válida
         }
-
-        return false; // falhou na palavra pass ou no usuário
-
     }
+
+    return false; // falhou na palavra pass ou no usuário
+
+}
 
 }
