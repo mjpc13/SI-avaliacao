@@ -16,7 +16,7 @@ public class FileManagement implements java.io.Serializable {
 
     public void readPublications() {
 
-        try (FileInputStream fis = new FileInputStream("./pubs.tmp")) {
+        try (FileInputStream fis = new FileInputStream("SI-avaliacao/src/exercicio4/pubs.tmp")) {
             ObjectInputStream ois = new ObjectInputStream(fis);
 
             this.pub_list = (ArrayList<Publication>) ois.readObject();
@@ -35,7 +35,7 @@ public class FileManagement implements java.io.Serializable {
 
     public void writePublications() {
 
-        try (FileOutputStream fos = new FileOutputStream("./pubs.tmp")) {
+        try (FileOutputStream fos = new FileOutputStream("SI-avaliacao/src/exercicio4/pubs.tmp")) {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(pub_list);
             oos.close();
@@ -48,7 +48,7 @@ public class FileManagement implements java.io.Serializable {
 
     public void readUsers() {
 
-        try (FileInputStream fis = new FileInputStream("./users.tmp")) {
+        try (FileInputStream fis = new FileInputStream("SI-avaliacao/src/exercicio4/users.tmp")) {
             ObjectInputStream ois = new ObjectInputStream(fis);
 
             this.user_list = (ArrayList<User>) ois.readObject();
@@ -66,7 +66,7 @@ public class FileManagement implements java.io.Serializable {
 
     public void writeUsers() {
 
-        try (FileOutputStream fos = new FileOutputStream("./users.tmp")) {
+        try (FileOutputStream fos = new FileOutputStream("SI-avaliacao/src/exercicio4/users.tmp")) {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(user_list);
             oos.close();

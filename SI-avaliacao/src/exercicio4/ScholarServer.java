@@ -10,6 +10,8 @@ public class ScholarServer {
 		try {
 			FileManagement fm = new FileManagement();
 
+			System.out.println("\n");
+
 			fm.readPublications(); // lê os ficheiros das publicações e dos Usuários;
 			fm.readUsers();
 
