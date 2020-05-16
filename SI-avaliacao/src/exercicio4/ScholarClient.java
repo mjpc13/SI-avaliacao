@@ -27,14 +27,22 @@ public class ScholarClient {
 
 				menu1Print();
 				String menu1 = inputVerification(options_menu1, scan);
+				String email = "";
 
 				if (menu1.equals("1")) {
 					logged = registerMenu(sch, scan);
 				}
-
+				
 				else if (menu1.equals("2")) {
 
-					logged = loginMenu(sch, scan);
+					email = loginMenu(sch, scan);
+					
+					if (email.equals(null)){
+						logged = false;
+					}
+					else {
+						logged = true;
+					}
 
 				}
 
@@ -42,12 +50,41 @@ public class ScholarClient {
 					sch.writeToFiles();
 					connected = false;
 				}
-
+				
 				while (logged) {
 
+					User myself = sch.getUserData(email);
 					menu2Print();
 					String menu2 = inputVerification(options_menu2, scan);
 					System.out.println("=".repeat(55));
+
+					if (menu2.equals("1")){
+						myself.printPublications(true);
+					}
+	
+					else if (menu2.equals("2")){
+						myself.printPublications(false);
+					}
+	
+					else if (menu2.equals("3")){
+						// sch.addNewPublication(autores, titulo, ano, revista, volume, numero, pagina, citacoes, user);
+					}
+	
+					else if (menu2.equals("4")){
+						
+					}
+	
+					else if (menu2.equals("5")){
+						// myself.removePublication(listOfDoi);
+					}
+	
+					else if (menu2.equals("6")){
+						myself.showStats();
+					}
+	
+					else if (menu2.equals("7")){
+						logged = false;
+					}
 
 				}
 
@@ -113,7 +150,7 @@ public class ScholarClient {
 		return email;
 	}
 
-	public static boolean loginMenu(ScholarInterface sch, Scanner scan) throws Exception {
+	public static String loginMenu(ScholarInterface sch, Scanner scan) throws Exception {
 
 		System.out.println("=".repeat(20) + " Login: " + "=".repeat(20));
 
@@ -126,10 +163,10 @@ public class ScholarClient {
 		if (!sch.loginVerification(email, password)) {
 			System.out.println("Invalid user. If you are a new user please register first.");
 
-			return false;
+			return null;
 		} else {
 			System.out.println("Login Successful.");
-			return true;
+			return email;
 		}
 
 	}
