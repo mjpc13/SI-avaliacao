@@ -33,15 +33,14 @@ public class ScholarClient {
 				if (menu1.equals("1")) {
 					logged = registerMenu(sch, scan);
 				}
-				
+
 				else if (menu1.equals("2")) {
 
 					email = loginMenu(sch, scan);
-					
-					if (email.equals(null)){
+
+					if (email.equals(null)) {
 						logged = false;
-					}
-					else {
+					} else {
 						logged = true;
 					}
 
@@ -51,7 +50,7 @@ public class ScholarClient {
 					sch.writeToFiles();
 					connected = false;
 				}
-				
+
 				while (logged) {
 
 					User myself = sch.getUserData(email);
@@ -59,22 +58,23 @@ public class ScholarClient {
 					String menu2 = inputVerification(options_menu2, scan);
 					System.out.println("=".repeat(55));
 
-					if (menu2.equals("1")){
+					if (menu2.equals("1")) {
 						myself.printPublications(true);
 					}
-	
-					else if (menu2.equals("2")){
+
+					else if (menu2.equals("2")) {
 						myself.printPublications(false);
 					}
-	
-					else if (menu2.equals("3")){
+
+					else if (menu2.equals("3")) {
 						System.out.println("Authors: ");
 						ArrayList<String> autores = new ArrayList<String>();
 
 						System.out.println("How many authors wrote this publication? ");
 						int n = scan.nextInt();
 
-						System.out.println("Please introduce the name of the authors and press enter, one name at a time. ");
+						System.out.println(
+								"Please introduce the name of the authors and press enter, one name at a time. ");
 						for (int i = 0; i <= n; i++) {
 							String author = scan.nextLine();
 							autores.add(author);
@@ -104,12 +104,12 @@ public class ScholarClient {
 						User user = myself;
 						sch.addNewPublication(autores, titulo, ano, revista, volume, numero, pagina, citacoes, user);
 					}
-	
-					else if (menu2.equals("4")){
-						
+
+					else if (menu2.equals("4")) {
+
 					}
-	
-					else if (menu2.equals("5")){
+
+					else if (menu2.equals("5")) {
 						ArrayList<Integer> listOfDoi = new ArrayList<Integer>();
 						System.out.println("How many publications do you wish to remove? ");
 						int n = scan.nextInt();
@@ -119,16 +119,16 @@ public class ScholarClient {
 							int doi = scan.nextInt();
 							listOfDoi.add(doi);
 						}
-						
+
 						myself.removePublication(listOfDoi);
 					}
-	
-					else if (menu2.equals("6")){
+
+					else if (menu2.equals("6")) {
 						myself.showStats();
 					}
-	
-					else if (menu2.equals("7")){
-						logged = false;
+
+					else if (menu2.equals("7")) {
+							logged = false;
 					}
 
 				}
