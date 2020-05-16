@@ -80,9 +80,6 @@ public class ScholarClient {
 							autores.add(author);
 						}
 
-						for(String author : autores){
-							System.out.println(author);
-						}
 						System.out.println("Title: ");
 						String titulo = scan.nextLine();
 
