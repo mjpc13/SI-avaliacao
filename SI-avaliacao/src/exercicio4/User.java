@@ -154,7 +154,7 @@ public class User implements Serializable {
         // roll number
         public int compare(Publication a, Publication b){
 
-                return a.getCitacoes() b.getCitacoes(); 
+                return a.getCitacoes() - b.getCitacoes(); 
 
             }
     }

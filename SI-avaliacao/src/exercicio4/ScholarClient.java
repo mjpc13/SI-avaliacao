@@ -30,43 +30,46 @@ public class ScholarClient {
 				System.out.println("Name: ");
 				String name = scan.nextLine();
 
-				System.out.println("Email: ");
-				String email = scan.nextLine();
+				String email = emailInput();
 
-				while ((email.contains("@") && email.contains(".")) == false) {
-					System.out.println("You introduced an invalid email address. Please try again.");
-					email = scan.nextLine();
-				}
 				System.out.println("Password: ");
 				String password = scan.nextLine();
 
 				System.out.println("Afiliações: ");
 				String afi = scan.nextLine();
 
-				// addNewuser(name,email,password,afi);
+				if(sch.addNewUser(name,email,password,afi)){
+					System.out.println("User Successfully Registered!");
+				}
+				else {
+					System.out.println("This user already exists.");
+				}
 			} else if (menu1.equals("2")) {
 				System.out.println("=".repeat(20) + "Login:" + "=".repeat(20));
 
-				System.out.println("Email: ");
-				String email = scan.nextLine();
+				// System.out.println("Email: ");
+				// String email = scan.nextLine();
+				// scan.nextLine();
 
-				while ((email.contains("@") && email.contains(".")) == false) {
-					System.out.println("You introduced an invalid email address. Please try again.");
-					email = scan.nextLine();
-				}
+				// while ((email.contains("@") && email.contains(".")) == false) {
+				// 	System.out.println("You introduced an invalid email address. Please try again.");
+				// 	email = scan.nextLine();
+				// }
+				
+				String email = emailInput();
 
 				System.out.println("Password: ");
 				String password = scan.nextLine();
+				scan.nextLine();
 
-				// while(!loginVerification(email, password)) {
-				// System.out.println("Invalid user. Please try again.");
+				while (!sch.loginVerification(email, password)) {
+					System.out.println("Invalid user. Please try again.");
 
-				// System.out.println("Email: ");
-				// email = scan.nextLine();
+					email = emailInput();
 
-				// System.out.println("Password: ");
-				// password = scan.nextLine();
-				// }
+					System.out.println("Password: ");
+					password = scan.nextLine();
+				}
 
 				// menu 3
 				System.out.println("=".repeat(55));
@@ -131,6 +134,18 @@ public class ScholarClient {
 
 		return response;
 
+	}
+
+	public static String emailInput() {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Email: ");
+		String email = scan.nextLine();
+
+		while ((email.contains("@") && email.contains(".")) == false) {
+			System.out.println("You introduced an invalid email address. Please try again.\n");
+			email = scan.nextLine();
+		}
+		return email;
 	}
 
 }
