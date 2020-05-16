@@ -18,6 +18,6 @@ public interface ScholarInterface extends Remote {
 
     public boolean loginVerification(String mail, String password) throws Exception;
 
-    public void writeToFiles();
+    public void writeToFiles() throws Exception;
 
 }

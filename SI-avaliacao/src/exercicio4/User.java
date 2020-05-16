@@ -155,6 +155,7 @@ public class User implements Serializable {
 
             return b.getCitacoes() - a.getCitacoes();
 
-        
+        }
+    }
 
 }

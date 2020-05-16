@@ -166,7 +166,6 @@ public class ScholarClient {
 
 		System.out.println("=".repeat(10) + "Scholar System" + "=".repeat(10));
 		System.out.println("1 - Register new Author \n2 - Login \n3 - Exit\n");
-
 	}
 
 	public static void menu2Print() {
