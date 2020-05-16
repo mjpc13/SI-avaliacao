@@ -2,6 +2,7 @@ package exercicio4;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ScholarClient {
@@ -67,7 +68,32 @@ public class ScholarClient {
 					}
 	
 					else if (menu2.equals("3")){
-						// sch.addNewPublication(autores, titulo, ano, revista, volume, numero, pagina, citacoes, user);
+						System.out.println("Authors: ");
+						ArrayList<String> autores = new ArrayList<String>();
+
+						System.out.println("Title: ");
+						String titulo = scan.nextLine();
+
+						System.out.println("Year: ");
+						int ano = scan.nextInt();
+
+						System.out.println("Magazine: ");
+						String revista = scan.nextLine();
+
+						System.out.println("Volume: ");
+						String volume = scan.nextLine();
+
+						System.out.println("Number: ");
+						int numero = scan.nextInt();
+
+						System.out.println("Page: ");
+						String pagina = scan.nextLine();
+
+						System.out.println("Citations: ");
+						int citacoes = scan.nextInt();
+
+						User user = myself;
+						sch.addNewPublication(autores, titulo, ano, revista, volume, numero, pagina, citacoes, user);
 					}
 	
 					else if (menu2.equals("4")){
@@ -75,7 +101,17 @@ public class ScholarClient {
 					}
 	
 					else if (menu2.equals("5")){
-						// myself.removePublication(listOfDoi);
+						ArrayList<Integer> listOfDoi = new ArrayList<Integer>();
+						System.out.println("How many publications do you wish to remove? ");
+						int n = scan.nextInt();
+
+						System.out.println("Please introduce the DOIs and press enter, one DOI at a time. ");
+						for (int i = 0; i < n; i++) {
+							int doi = scan.nextInt();
+							listOfDoi.add(doi);
+						}
+						
+						myself.removePublication(listOfDoi);
 					}
 	
 					else if (menu2.equals("6")){
