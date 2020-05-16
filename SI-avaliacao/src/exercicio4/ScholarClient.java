@@ -24,17 +24,19 @@ public class ScholarClient {
 			String[] options_menu1 = { "1", "2", "3" };
 			String[] options_menu2 = { "1", "2", "3", "4", "5", "6", "7" };
 
-			menu1Print();
-			String menu1 = inputVerification(options_menu1, scan);
+			
 			
 			while (connected) {
 				
+				menu1Print();
+				String menu1 = inputVerification(options_menu1, scan);
+				System.out.println("merda");
 				String email = "";
 
 				if (menu1.equals("1")) {
 					registerMenu(sch, scan);
-					menu1Print();
-					menu1 = inputVerification(options_menu1, scan);
+					// menu1Print();
+					// menu1 = inputVerification(options_menu1, scan);
 				}
 				
 				else if (menu1.equals("2")) {
