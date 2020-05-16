@@ -19,131 +19,39 @@ public class ScholarClient {
 
 			Scanner scan = new Scanner(System.in);
 
-			System.out.println("=".repeat(10) + "Scholar System" + "=".repeat(10));
-			System.out.println("1 - Register new Author \n2 - Login \n3 - Exit\n");
+			boolean connected = true, logged = false;
 			String[] options_menu1 = { "1", "2", "3" };
-			String menu1 = inputVerification(options_menu1, scan);
+			String[] options_menu2 = { "1", "2", "3", "4", "5", "6", "7" };
 
-			if (menu1.equals("1")) {
-				System.out.println("=".repeat(20) + "Register:" + "=".repeat(20));
+			while (connected) {
 
-				System.out.println("Name: ");
-				System.out.print("==> ");
-				String name = scan.nextLine();
+				menu1Print();
+				String menu1 = inputVerification(options_menu1, scan);
 
-				String email = emailInput(scan);
-
-				System.out.println("Password: ");
-				System.out.print("==> ");
-				String password = scan.nextLine();
-
-				System.out.println("Afiliações: ");
-				System.out.print("==> ");
-				String afi = scan.nextLine();
-
-				if (sch.addNewUser(name, email, password, afi)) {
-					System.out.println("User Successfully Registered!");
-				} else {
-					System.out.println("This user already exists.");
+				if (menu1.equals("1")) {
+					logged = registerMenu(sch, scan);
 				}
 
-				// System.out.println("=".repeat(20) + "Login:" + "=".repeat(20));
+				else if (menu1.equals("2")) {
 
-				// email = emailInput();
+					logged = loginMenu(sch, scan);
 
-				// System.out.println("Password: ");
-				// password = scan.nextLine();
-				// // scan.nextLine();
+				}
 
-				// while (!sch.loginVerification(email, password)) {
-				// System.out.println("Invalid user. Please try again.");
+				else {
+					connected = false;
+				}
 
-				// email = emailInput();
+				while (logged) {
 
-				// System.out.println("Password: ");
-				// password = scan.nextLine();
-				// }
+					menu2Print();
+					String menu2 = inputVerification(options_menu2, scan);
+					System.out.println("=".repeat(55));
 
-				// System.out.println("Login Successful.");
+				}
 
 			}
 
-			else if (menu1.equals("2")) {
-				System.out.println("=".repeat(20) + " Login: " + "=".repeat(20));
-
-				String email = emailInput(scan);
-				// scan.nextLine();
-
-<<<<<<< HEAD
-				String email = emailInput();
-				scan.nextLine();
-
-=======
->>>>>>> c0a2717a95b46c737ee254ada152abd329948bfe
-				System.out.println("Password: ");
-				String password = scan.nextLine();
-				// scan.nextLine();
-
-				while (!sch.loginVerification(email, password)) {
-					System.out.println("Invalid user. Please try again.");
-
-					email = emailInput(scan);
-
-					System.out.println("Password: ");
-					password = scan.nextLine();
-				}
-
-				System.out.println("Login Successful.");
-
-				// menu 3
-				System.out.println("=".repeat(55));
-				System.out.println("1 - List Publications by year (newest first)");
-				System.out.println("2 - List Publications by year (Most cited first)");
-				System.out.println("3 - Add Publication");
-				System.out.println("4 - Look for author publications in database");
-				System.out.println("5 - Remove publication");
-				System.out.println("6 - Show author statistics");
-				System.out.println("7 - Logout");
-				System.out.println("=".repeat(55));
-
-				String[] options_menu2 = { "1", "2", "3", "4", "5", "6", "7" };
-				String menu2 = inputVerification(options_menu2, scan);
-
-				if (menu2.equals("1")){
-					
-				}
-
-				else if (menu2.equals("2")){
-					
-				}
-
-				else if (menu2.equals("3")){
-				
-				}
-
-				else if (menu2.equals("4")){
-					
-				}
-
-				else if (menu2.equals("5")){
-					
-				}
-
-				else if (menu2.equals("6")){
-					
-				}
-
-				else if (menu2.equals("7")){
-					
-				}
-				
-
-
-			}
-
-			else if (menu1.equals("3")) {
-
-			}
 		} catch (Exception e) // catching Exception means that we are handling all errors in the same block
 		{ // usually it is advisable to use multiple catch blocks and perform different
 			// error handling actions
@@ -194,13 +102,82 @@ public class ScholarClient {
 
 		System.out.println("Email: ");
 		System.out.print("==> ");
-		String email = scan.nextLine();
+		String email = scan.next();
 
 		while ((email.contains("@") && email.contains(".")) == false) {
 			System.out.println("You introduced an invalid email address. Please try again.\n");
-			email = scan.nextLine();
+			System.out.println("=".repeat(55));
+			email = scan.next();
 		}
 		return email;
 	}
 
+	public static boolean loginMenu(ScholarInterface sch, Scanner scan) throws Exception {
+
+		System.out.println("=".repeat(20) + " Login: " + "=".repeat(20));
+
+		String email = emailInput(scan);
+
+		System.out.println("Password: ");
+		System.out.print("==> ");
+		String password = scan.next();
+
+		if (!sch.loginVerification(email, password)) {
+			System.out.println("Invalid user. If you are a new user please register first.");
+
+			return false;
+		} else {
+			System.out.println("Login Successful.");
+			return true;
+		}
+
+	}
+
+	public static boolean registerMenu(ScholarInterface sch, Scanner scan) throws Exception {
+
+		System.out.println("=".repeat(20) + "Register:" + "=".repeat(20));
+
+		System.out.println("Name: ");
+		System.out.print("==> ");
+		String name = scan.next();
+
+		String email = emailInput(scan);
+
+		System.out.println("Password: ");
+		System.out.print("==> ");
+		String password = scan.next();
+
+		System.out.println("Afiliações: ");
+		System.out.print("==> ");
+		String afi = scan.next();
+
+		if (sch.addNewUser(name, email, password, afi)) {
+			System.out.println("> User Successfully Registered!");
+			return true;
+		} else {
+			System.out.println("> This user already exists.");
+			return false;
+		}
+
+	}
+
+	public static void menu1Print() {
+
+		System.out.println("=".repeat(10) + "Scholar System" + "=".repeat(10));
+		System.out.println("1 - Register new Author \n2 - Login \n3 - Exit\n");
+
+	}
+
+	public static void menu2Print() {
+		System.out.println("=".repeat(55));
+		System.out.println("1 - List Publications by year (newest first)");
+		System.out.println("2 - List Publications by year (Most cited first)");
+		System.out.println("3 - Add Publication");
+		System.out.println("4 - Look for author publications in database");
+		System.out.println("5 - Remove publication");
+		System.out.println("6 - Show author statistics");
+		System.out.println("7 - Logout");
+		System.out.print("==> ");
+
+	}
 }
