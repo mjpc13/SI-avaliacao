@@ -24,14 +24,16 @@ public class ScholarClient {
 			String[] options_menu1 = { "1", "2", "3" };
 			String[] options_menu2 = { "1", "2", "3", "4", "5", "6", "7" };
 
+			
+			
 			while (connected) {
-
+				
 				menu1Print();
 				String menu1 = inputVerification(options_menu1, scan);
 				String email = "";
 
 				if (menu1.equals("1")) {
-					logged = registerMenu(sch, scan);
+					registerMenu(sch, scan);
 				}
 
 				else if (menu1.equals("2")) {
@@ -104,9 +106,26 @@ public class ScholarClient {
 						User user = myself;
 						sch.addNewPublication(autores, titulo, ano, revista, volume, numero, pagina, citacoes, user);
 					}
+<<<<<<< HEAD
 
 					else if (menu2.equals("4")) {
 
+=======
+	
+					else if (menu2.equals("4")){
+						ArrayList<Publication> publicationList = sch.getPublications();
+						ArrayList<String> authorList = new ArrayList<String>();
+						for(Publication pub : publicationList){
+							authorList = pub.getListaAutores();
+						}
+
+						for(String author : authorList){
+							if (myself.getNome().equals(author)){
+
+							}
+						}
+						
+>>>>>>> ac661d2504b28d5e9db6cb2a3d4fe9dfb8ba140e
 					}
 
 					else if (menu2.equals("5")) {
@@ -216,13 +235,14 @@ public class ScholarClient {
 
 	}
 
-	public static boolean registerMenu(ScholarInterface sch, Scanner scan) throws Exception {
+	public static void registerMenu(ScholarInterface sch, Scanner scan) throws Exception {
 
 		System.out.println("=".repeat(20) + "Register:" + "=".repeat(20));
 
 		System.out.println("Name: ");
 		System.out.print("==> ");
 		String name = scan.next();
+		scan.nextLine();
 
 		String email = emailInput(scan);
 
@@ -236,10 +256,10 @@ public class ScholarClient {
 
 		if (sch.addNewUser(name, email, password, afi)) {
 			System.out.println("> User Successfully Registered!");
-			return true;
+			// return true;
 		} else {
 			System.out.println("> This user already exists.");
-			return false;
+			// return false;
 		}
 
 	}
