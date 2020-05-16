@@ -114,4 +114,13 @@ public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface
         return false; // falhou na palavra pass ou no usuário
     }
 
+    @Override
+    public void writeToFiles() throws Exception {
+        // TODO Auto-generated method stub
+
+        fm.writePublications();
+        fm.writeUsers();
+
+    }
+
 }

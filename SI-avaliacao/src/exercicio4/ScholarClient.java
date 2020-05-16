@@ -13,7 +13,7 @@ public class ScholarClient {
 
 			// 'lookup' returns the remote reference bound to the specified name in this
 			// registry.
-			ScholarInterface sch = (ScholarInterface) registry.lookup("test");
+			ScholarInterface sch = (ScholarInterface) registry.lookup("Scholar");
 
 			// let's execute our remote operation and keep the return value in 'result'!
 
@@ -39,6 +39,7 @@ public class ScholarClient {
 				}
 
 				else {
+					sch.writeToFiles();
 					connected = false;
 				}
 
@@ -180,4 +181,5 @@ public class ScholarClient {
 		System.out.print("==> ");
 
 	}
+
 }

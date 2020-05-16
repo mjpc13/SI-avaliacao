@@ -25,7 +25,7 @@ public class ScholarServer {
 			Registry registry = LocateRegistry.createRegistry(1099);
 
 			// Question: could we use rebind here?
-			registry.bind("test", obj);
+			registry.bind("Scholar", obj);
 
 		} catch (Exception e) // catching Exception means that we are handling all errors in the same block
 		{ // usually it is advisable to use multiple catch blocks and perform different
