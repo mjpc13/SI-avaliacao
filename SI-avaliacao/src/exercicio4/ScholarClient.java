@@ -71,6 +71,18 @@ public class ScholarClient {
 						System.out.println("Authors: ");
 						ArrayList<String> autores = new ArrayList<String>();
 
+						System.out.println("How many authors wrote this publication? ");
+						int n = scan.nextInt();
+
+						System.out.println("Please introduce the name of the authors and press enter, one name at a time. ");
+						for (int i = 0; i <= n; i++) {
+							String author = scan.nextLine();
+							autores.add(author);
+						}
+
+						for(String author : autores){
+							System.out.println(author);
+						}
 						System.out.println("Title: ");
 						String titulo = scan.nextLine();
 
