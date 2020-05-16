@@ -5,14 +5,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class FileManagement implements java.io.Serializable {
+public class FileManagement implements Serializable {
+
+    private static final long serialVersionUID = 9183947707057785900L;
 
     private ArrayList<Publication> pub_list;
     private ArrayList<User> user_list;
-
-    private static final long serialVersionUID = -8121895196637993258L;
 
     public void readPublications() {
 

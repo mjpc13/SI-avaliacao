@@ -142,21 +142,19 @@ public class User implements Serializable {
     }
 
     class SortbyYear implements Comparator<Publication> {
-        // Used for sorting in ascending order of
-        // roll number
+
         public int compare(Publication a, Publication b) {
-            return a.getAno() - b.getAno();
+            return b.getAno() - a.getAno();
         }
     }
 
     class SortbyCitation implements Comparator<Publication> {
         // Used for sorting in ascending order of
         // roll number
-        public int compare(Publication a, Publication b){
+        public int compare(Publication a, Publication b) {
 
-                return a.getCitacoes() - b.getCitacoes(); 
+            return b.getCitacoes() - a.getCitacoes();
 
-            }
-    }
+        
 
 }
