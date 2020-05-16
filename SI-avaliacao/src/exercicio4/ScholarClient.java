@@ -30,13 +30,10 @@ public class ScholarClient {
 				
 				menu1Print();
 				String menu1 = inputVerification(options_menu1, scan);
-				System.out.println("merda");
 				String email = "";
 
 				if (menu1.equals("1")) {
 					registerMenu(sch, scan);
-					// menu1Print();
-					// menu1 = inputVerification(options_menu1, scan);
 				}
 				
 				else if (menu1.equals("2")) {
