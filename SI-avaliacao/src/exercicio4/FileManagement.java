@@ -16,7 +16,7 @@ public class FileManagement implements java.io.Serializable {
 
     public void readPublications() {
 
-        try (FileInputStream fis = new FileInputStream("pubs.tmp")) {
+        try (FileInputStream fis = new FileInputStream("./pubs.tmp")) {
             ObjectInputStream ois = new ObjectInputStream(fis);
 
             this.pub_list = (ArrayList<Publication>) ois.readObject();
@@ -26,7 +26,7 @@ public class FileManagement implements java.io.Serializable {
         } catch (ClassCastException | ClassNotFoundException | IOException e) {
             // ficheiro nao encontrado ou dados corrompidos
             this.pub_list = new ArrayList<>();
-            System.out.println("> Nao foram encontrados dados guardados: foi criado um novo ficheiro");
+            System.out.println("> Nao foram encontrados dados guardados: foi criado um novo ficheiro de Publicações");
             writePublications(); // escreve dados atuais no disco
 
         }
@@ -35,7 +35,7 @@ public class FileManagement implements java.io.Serializable {
 
     public void writePublications() {
 
-        try (FileOutputStream fos = new FileOutputStream("pubs.tmp")) {
+        try (FileOutputStream fos = new FileOutputStream("./pubs.tmp")) {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(pub_list);
             oos.close();
@@ -48,7 +48,7 @@ public class FileManagement implements java.io.Serializable {
 
     public void readUsers() {
 
-        try (FileInputStream fis = new FileInputStream("users.tmp")) {
+        try (FileInputStream fis = new FileInputStream("./users.tmp")) {
             ObjectInputStream ois = new ObjectInputStream(fis);
 
             this.user_list = (ArrayList<User>) ois.readObject();
@@ -58,15 +58,15 @@ public class FileManagement implements java.io.Serializable {
         } catch (ClassCastException | ClassNotFoundException | IOException e) {
             // ficheiro nao encontrado ou dados corrompidos
             this.user_list = new ArrayList<>();
-            System.out.println("> Nao foram encontrados dados guardados: foi criado um novo ficheiro");
-            writePublications(); // escreve dados atuais no disco
+            System.out.println("> Nao foram encontrados dados guardados: foi criado um novo ficheiro de Users");
+            writeUsers(); // escreve dados atuais no disco
         }
 
     }
 
     public void writeUsers() {
 
-        try (FileOutputStream fos = new FileOutputStream("users.tmp")) {
+        try (FileOutputStream fos = new FileOutputStream("./users.tmp")) {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(user_list);
             oos.close();
