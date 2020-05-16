@@ -89,6 +89,7 @@ public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface
         User user = new User(nome, mail, password, afi); // caso contrário criamos um usuário e adicionamos ao ficheiro
 
         fm.addUser(user);
+        fm.writeUsers();
 
         return true;
     }

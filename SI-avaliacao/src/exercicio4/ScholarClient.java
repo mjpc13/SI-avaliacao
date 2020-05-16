@@ -29,6 +29,7 @@ public class ScholarClient {
 
 				System.out.println("Name: ");
 				String name = scan.nextLine();
+				scan.nextLine();
 
 				String email = emailInput();
 
@@ -44,23 +45,37 @@ public class ScholarClient {
 				else {
 					System.out.println("This user already exists.");
 				}
-			} else if (menu1.equals("2")) {
+
+				// System.out.println("=".repeat(20) + "Login:" + "=".repeat(20));
+
+				// email = emailInput();
+
+				// System.out.println("Password: ");
+				// password = scan.nextLine();
+				// // scan.nextLine();
+
+				// while (!sch.loginVerification(email, password)) {
+				// 	System.out.println("Invalid user. Please try again.");
+
+				// 	email = emailInput();
+
+				// 	System.out.println("Password: ");
+				// 	password = scan.nextLine();
+				// }
+
+				// System.out.println("Login Successful.");
+
+			}
+			
+			else if (menu1.equals("2")) {
 				System.out.println("=".repeat(20) + "Login:" + "=".repeat(20));
 
-				// System.out.println("Email: ");
-				// String email = scan.nextLine();
-				// scan.nextLine();
-
-				// while ((email.contains("@") && email.contains(".")) == false) {
-				// 	System.out.println("You introduced an invalid email address. Please try again.");
-				// 	email = scan.nextLine();
-				// }
-				
 				String email = emailInput();
-
+				scan.nextLine();
+				
 				System.out.println("Password: ");
 				String password = scan.nextLine();
-				scan.nextLine();
+				// scan.nextLine();
 
 				while (!sch.loginVerification(email, password)) {
 					System.out.println("Invalid user. Please try again.");
@@ -70,6 +85,8 @@ public class ScholarClient {
 					System.out.println("Password: ");
 					password = scan.nextLine();
 				}
+
+				System.out.println("Login Successful.");
 
 				// menu 3
 				System.out.println("=".repeat(55));
@@ -84,6 +101,8 @@ public class ScholarClient {
 
 				String[] options_menu2 = { "1", "2", "3", "4", "5", "6", "7" };
 				String menu2 = inputVerification(options_menu2, scan);
+
+				// if (menu2)
 
 			}
 
