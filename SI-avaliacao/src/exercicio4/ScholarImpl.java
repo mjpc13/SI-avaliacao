@@ -98,21 +98,19 @@ public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface
         return true;
     }
 
-    // TODO Auto-generated method stub
+    public boolean loginVerification(String mail, String password) {
+        // TODO Auto-generated method stub
 
-    ArrayList<User> user_list = fm.getUser_list();
+        ArrayList<User> user_list = fm.getUser_list();
 
-    for(
-    User user:user_list)
-    {
-        if (user.getMail().equals(mail) && user.getPassword().equals(password)) {
+        for (User user : user_list) {
+            if (user.getMail().equals(mail) && user.getPassword().equals(password)) {
 
-            return true; // a autenticação é válida
+                return true; // a autenticação é válida
+            }
         }
+
+        return false; // falhou na palavra pass ou no usuário
     }
-
-    return false; // falhou na palavra pass ou no usuário
-
-}
 
 }
