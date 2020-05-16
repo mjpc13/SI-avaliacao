@@ -72,7 +72,7 @@ public class ScholarClient {
 
 				String email = emailInput();
 				scan.nextLine();
-				
+
 				System.out.println("Password: ");
 				String password = scan.nextLine();
 				// scan.nextLine();
@@ -102,7 +102,35 @@ public class ScholarClient {
 				String[] options_menu2 = { "1", "2", "3", "4", "5", "6", "7" };
 				String menu2 = inputVerification(options_menu2, scan);
 
-				// if (menu2)
+				if (menu2.equals("1")){
+					
+				}
+
+				else if (menu2.equals("2")){
+					
+				}
+
+				else if (menu2.equals("3")){
+				
+				}
+
+				else if (menu2.equals("4")){
+					
+				}
+
+				else if (menu2.equals("5")){
+					
+				}
+
+				else if (menu2.equals("6")){
+					
+				}
+
+				else if (menu2.equals("7")){
+					
+				}
+				
+
 
 			}
 
