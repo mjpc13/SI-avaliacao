@@ -3,6 +3,7 @@ package exercicio4;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class ScholarClient {
@@ -23,17 +24,17 @@ public class ScholarClient {
 			boolean connected = true, logged = false;
 			String[] options_menu1 = { "1", "2", "3" };
 			String[] options_menu2 = { "1", "2", "3", "4", "5", "6", "7" };
+			User myself = null;
 
-			
-			
 			while (connected) {
-				
+
 				menu1Print();
 				String menu1 = inputVerification(options_menu1, scan);
 				String email = "";
 
 				if (menu1.equals("1")) {
-					registerMenu(sch, scan);
+					myself = sch.getUserData(email);
+					logged = registerMenu(sch, scan);
 				}
 
 				else if (menu1.equals("2")) {
@@ -43,6 +44,7 @@ public class ScholarClient {
 					if (email.equals(null)) {
 						logged = false;
 					} else {
+						myself = sch.getUserData(email);
 						logged = true;
 					}
 
@@ -55,7 +57,6 @@ public class ScholarClient {
 
 				while (logged) {
 
-					User myself = sch.getUserData(email);
 					menu2Print();
 					String menu2 = inputVerification(options_menu2, scan);
 					System.out.println("=".repeat(55));
@@ -69,77 +70,17 @@ public class ScholarClient {
 					}
 
 					else if (menu2.equals("3")) {
-						System.out.println("Authors: ");
-						ArrayList<String> autores = new ArrayList<String>();
 
-						System.out.println("How many authors wrote this publication? ");
-						int n = scan.nextInt();
+						addPub(sch, scan, myself);
 
-						System.out.println(
-								"Please introduce the name of the authors and press enter, one name at a time. ");
-						for (int i = 0; i <= n; i++) {
-							String author = scan.nextLine();
-							autores.add(author);
-						}
-
-						System.out.println("Title: ");
-						String titulo = scan.nextLine();
-
-						System.out.println("Year: ");
-						int ano = scan.nextInt();
-
-						System.out.println("Magazine: ");
-						String revista = scan.nextLine();
-
-						System.out.println("Volume: ");
-						String volume = scan.nextLine();
-
-						System.out.println("Number: ");
-						int numero = scan.nextInt();
-
-						System.out.println("Page: ");
-						String pagina = scan.nextLine();
-
-						System.out.println("Citations: ");
-						int citacoes = scan.nextInt();
-
-						User user = myself;
-						sch.addNewPublication(autores, titulo, ano, revista, volume, numero, pagina, citacoes, user);
 					}
-<<<<<<< HEAD
 
 					else if (menu2.equals("4")) {
 
-=======
-	
-					else if (menu2.equals("4")){
-						ArrayList<Publication> publicationList = sch.getPublications();
-						ArrayList<String> authorList = new ArrayList<String>();
-						for(Publication pub : publicationList){
-							authorList = pub.getListaAutores();
-						}
-
-						for(String author : authorList){
-							if (myself.getNome().equals(author)){
-
-							}
-						}
-						
->>>>>>> ac661d2504b28d5e9db6cb2a3d4fe9dfb8ba140e
 					}
 
 					else if (menu2.equals("5")) {
-						ArrayList<Integer> listOfDoi = new ArrayList<Integer>();
-						System.out.println("How many publications do you wish to remove? ");
-						int n = scan.nextInt();
 
-						System.out.println("Please introduce the DOIs and press enter, one DOI at a time. ");
-						for (int i = 0; i < n; i++) {
-							int doi = scan.nextInt();
-							listOfDoi.add(doi);
-						}
-
-						myself.removePublication(listOfDoi);
 					}
 
 					else if (menu2.equals("6")) {
@@ -147,7 +88,7 @@ public class ScholarClient {
 					}
 
 					else if (menu2.equals("7")) {
-							logged = false;
+						logged = false;
 					}
 
 				}
@@ -235,14 +176,13 @@ public class ScholarClient {
 
 	}
 
-	public static void registerMenu(ScholarInterface sch, Scanner scan) throws Exception {
+	public static boolean registerMenu(ScholarInterface sch, Scanner scan) throws Exception {
 
 		System.out.println("=".repeat(20) + "Register:" + "=".repeat(20));
 
 		System.out.println("Name: ");
 		System.out.print("==> ");
 		String name = scan.next();
-		scan.nextLine();
 
 		String email = emailInput(scan);
 
@@ -256,10 +196,10 @@ public class ScholarClient {
 
 		if (sch.addNewUser(name, email, password, afi)) {
 			System.out.println("> User Successfully Registered!");
-			// return true;
+			return true;
 		} else {
 			System.out.println("> This user already exists.");
-			// return false;
+			return false;
 		}
 
 	}
@@ -280,6 +220,66 @@ public class ScholarClient {
 		System.out.println("6 - Show author statistics");
 		System.out.println("7 - Logout");
 		System.out.print("==> ");
+
+	}
+
+	public static int validateInt(Scanner scan) {
+		int number;
+		do {
+			// System.out.println("Please enter a positive number!");
+			while (!scan.hasNextInt()) {
+				System.out.println("That's not a number!");
+				scan.next(); // this is important!
+			}
+			number = scan.nextInt();
+		} while (number <= 0);
+
+		return number;
+
+	}
+
+	public static void addPub(ScholarInterface sch, Scanner scan, User myself) throws Exception {
+
+		System.out.println("Authors: (ex: lastName1, FirstName1;lastName2, FirstName2)");
+		System.out.print("==> ");
+		scan.nextLine();
+		String string_autores = scan.nextLine();
+		ArrayList<String> autores = new ArrayList<String>(Arrays.asList(string_autores.split(";")));
+
+		for (int i = 0; i < autores.size(); i++) { // se o utilizador escrever os nomes a começar por um
+													// espaço, elimina
+													// esse espaço
+			if (autores.get(i).substring(0, 1).equals(" ")) {
+				autores.set(i, autores.get(i).substring(1));
+			}
+		}
+
+		System.out.println("Title: ");
+		String titulo = scan.nextLine();
+
+		// scan.next();
+		System.out.println("Year: ");
+		int ano = validateInt(scan);
+		scan.nextLine();
+
+		System.out.println("Magazine: ");
+		String revista = scan.nextLine();
+
+		System.out.println("Volume: ");
+		String volume = scan.nextLine();
+
+		System.out.println("Number: ");
+		int numero = validateInt(scan);
+		scan.nextLine();
+
+		System.out.println("Page: ");
+		String pagina = scan.nextLine();
+
+		System.out.println("Citations: ");
+		int citacoes = validateInt(scan);
+		scan.nextLine();
+
+		sch.addNewPublication(autores, titulo, ano, revista, volume, numero, pagina, citacoes, myself);
 
 	}
 

@@ -25,7 +25,7 @@ public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface
     }
 
     public boolean addNewPublication(ArrayList<String> autores, String titulo, int ano, String revista, String volume,
-            int numero, String pagina, int citacoes, User user) throws Exception {
+            int numero, String pagina, int citacoes, User myself) throws Exception {
         // TODO Auto-generated method stub
 
         ArrayList<Publication> pubs_list = fm.getPub_list();
@@ -53,9 +53,9 @@ public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface
                                                                                                             // publicação
                                                                                                             // a ser
                                                                                                             // adicionada
-
         fm.addPublication(pub); // adiciona a publicação a lista que contem TODAS as pubs, e envia TRUE;
-        user.addPublication(pub); // adiciona a publicação a lista de pubs daquele usuário;
+        myself.addPublication(pub); // adiciona a publicação a lista de pubs daquele
+        // usuário;
 
         fm.writePublications(); // escreve no ficheiro a nova lista de Publications
         return true;

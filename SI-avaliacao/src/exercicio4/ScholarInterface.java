@@ -10,7 +10,7 @@ public interface ScholarInterface extends Remote {
     public ArrayList<Publication> getPublications() throws Exception;
 
     public boolean addNewPublication(ArrayList<String> autores, String titulo, int ano, String revista, String volume,
-            int numero, String pagina, int citacoes, User user) throws Exception;
+            int numero, String pagina, int citacoes, User myself) throws Exception;
 
     public User getUserData(String mail) throws Exception;
 

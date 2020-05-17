@@ -21,6 +21,7 @@ public class User implements Serializable {
         this.nome = nome2;
         this.password = password2;
         this.totalCitations = 0;
+        this.listPubs = new ArrayList<>();
 
     }
 
