@@ -11,8 +11,8 @@ public class User implements Serializable {
     private static final long serialVersionUID = 8306809467553336903L;
 
     private String nome, mail, password, afi;
-    private ArrayList<Publication> listPubs;
-    private int totalCitations;
+    public ArrayList<Publication> listPubs;
+    public int totalCitations;
 
     public User(String nome2, String mail2, String password2, String afi2) {
 

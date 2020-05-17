@@ -101,4 +101,19 @@ public class FileManagement implements Serializable {
     public void addUser(User u) {
         this.user_list.add(u);
     }
+
+    public void updateUserInfo(User u) {
+
+        for (User user : user_list) {
+
+            if (user.getMail().equals(u.getMail())) {
+
+                user_list.remove(user);
+                user_list.add(u);
+
+            }
+
+        }
+
+    }
 }

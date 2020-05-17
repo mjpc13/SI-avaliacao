@@ -24,7 +24,6 @@ public class ScholarClient {
 			boolean connected = true, logged = false;
 			String[] options_menu1 = { "1", "2", "3" };
 			String[] options_menu2 = { "1", "2", "3", "4", "5", "6", "7" };
-			User myself = null;
 
 			while (connected) {
 
@@ -33,7 +32,7 @@ public class ScholarClient {
 				String email = "";
 
 				if (menu1.equals("1")) {
-					myself = sch.getUserData(email);
+
 					logged = registerMenu(sch, scan);
 				}
 
@@ -44,7 +43,7 @@ public class ScholarClient {
 					if (email.equals(null)) {
 						logged = false;
 					} else {
-						myself = sch.getUserData(email);
+
 						logged = true;
 					}
 
@@ -56,6 +55,7 @@ public class ScholarClient {
 				}
 
 				while (logged) {
+					User myself = sch.getUserData(email);
 
 					menu2Print();
 					String menu2 = inputVerification(options_menu2, scan);
