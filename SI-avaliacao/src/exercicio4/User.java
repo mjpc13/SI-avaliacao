@@ -97,16 +97,22 @@ public class User implements Serializable {
 
     public void printPublications(boolean by_year) {
 
-        if (by_year) {
-            Collections.sort(listPubs, new SortbyYear());
-        } else {
-            Collections.sort(listPubs, new SortbyCitation());
+        if (listPubs == null) {
+            System.out.println("> You don't have anything published yet.");
         }
 
-        for (int i = 0; i < listPubs.size(); i++) {
+        else {
+            if (by_year) {
+                Collections.sort(listPubs, new SortbyYear());
+            } else {
+                Collections.sort(listPubs, new SortbyCitation());
+            }
 
-            System.out.println(i + ") " + listPubs.get(i));
+            for (int i = 0; i < listPubs.size(); i++) {
 
+                System.out.println(i + ") " + listPubs.get(i) + "\n");
+
+            }
         }
 
     }
@@ -140,6 +146,13 @@ public class User implements Serializable {
         // E não entendo o que é o H
 
         System.out.println(i10);
+    }
+
+    /**
+     * @param listPubs the listPubs to set
+     */
+    public void setListPubs(ArrayList<Publication> listPubs) {
+        this.listPubs = listPubs;
     }
 
     class SortbyYear implements Comparator<Publication> {

@@ -156,7 +156,7 @@ public class Publication implements Serializable {
         }
 
         print += titulo + ", " + String.valueOf(ano) + ", " + revista + ", " + volume + ", " + String.valueOf(numero)
-                + ", " + paginas + ", " + citacoes + ", " + String.valueOf(DOI);
+                + ", " + paginas + ", " + citacoes;
 
         return print;
     }

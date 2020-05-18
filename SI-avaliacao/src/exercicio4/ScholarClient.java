@@ -40,7 +40,7 @@ public class ScholarClient {
 
 					email = loginMenu(sch, scan);
 
-					if (email.equals(null)) {
+					if (email == null) {
 						logged = false;
 					} else {
 
@@ -114,7 +114,7 @@ public class ScholarClient {
 
 		while (!valid) { // ciclo que só para quando o utilizador inserir um input válido
 
-			response = scan.next(); // faz o scan da resposta do utilizador (assume que é String)
+			response = scan.nextLine(); // faz o scan da resposta do utilizador (assume que é String)
 
 			for (String option : valid_options) {
 
@@ -134,9 +134,6 @@ public class ScholarClient {
 
 		}
 
-		System.out.println("=".repeat(100));
-		System.out.println("\n".repeat(2));
-
 		return response;
 
 	}
@@ -145,12 +142,13 @@ public class ScholarClient {
 
 		System.out.println("Email: ");
 		System.out.print("==> ");
-		String email = scan.next();
+		String email = scan.nextLine();
 
 		while ((email.contains("@") && email.contains(".")) == false) {
-			System.out.println("You introduced an invalid email address. Please try again.\n");
-			System.out.println("=".repeat(55));
-			email = scan.next();
+			System.out.println("The email format is not valid. Please try again (check for spelling).\n");
+			System.out.print("==> ");
+			email = scan.nextLine();
+			// scan.next();
 		}
 		return email;
 	}
@@ -163,14 +161,15 @@ public class ScholarClient {
 
 		System.out.println("Password: ");
 		System.out.print("==> ");
-		String password = scan.next();
+		String password = scan.nextLine();
+		// scan.next();
 
 		if (!sch.loginVerification(email, password)) {
-			System.out.println("Invalid user. If you are a new user please register first.");
+			System.out.println("> Invalid user. If you are a new user please register first.");
 
 			return null;
 		} else {
-			System.out.println("Login Successful.");
+			System.out.println("> Login Successful.");
 			return email;
 		}
 
@@ -182,17 +181,21 @@ public class ScholarClient {
 
 		System.out.println("Name: ");
 		System.out.print("==> ");
-		String name = scan.next();
+		String name = scan.nextLine();
+		// scan.next();
 
 		String email = emailInput(scan);
 
 		System.out.println("Password: ");
 		System.out.print("==> ");
-		String password = scan.next();
+		String password = scan.nextLine();
+		// scan.next();
 
 		System.out.println("Afiliações: ");
 		System.out.print("==> ");
-		String afi = scan.next();
+		scan.next();
+		String afi = scan.nextLine();
+		// scan.next();
 
 		if (sch.addNewUser(name, email, password, afi)) {
 			System.out.println("> User Successfully Registered!");
@@ -205,12 +208,14 @@ public class ScholarClient {
 	}
 
 	public static void menu1Print() {
-
+		System.out.println("\n");
 		System.out.println("=".repeat(10) + "Scholar System" + "=".repeat(10));
 		System.out.println("1 - Register new Author \n2 - Login \n3 - Exit\n");
 	}
 
 	public static void menu2Print() {
+
+		System.out.println("\n");
 		System.out.println("=".repeat(55));
 		System.out.println("1 - List Publications by year (newest first)");
 		System.out.println("2 - List Publications by year (Most cited first)");
@@ -242,8 +247,8 @@ public class ScholarClient {
 
 		System.out.println("Authors: (ex: lastName1, FirstName1;lastName2, FirstName2)");
 		System.out.print("==> ");
-		scan.nextLine();
 		String string_autores = scan.nextLine();
+		// scan.next();
 		ArrayList<String> autores = new ArrayList<String>(Arrays.asList(string_autores.split(";")));
 
 		for (int i = 0; i < autores.size(); i++) { // se o utilizador escrever os nomes a começar por um
@@ -255,27 +260,35 @@ public class ScholarClient {
 		}
 
 		System.out.println("Title: ");
+		System.out.print("==> ");
 		String titulo = scan.nextLine();
+		// scan.next();
 
 		// scan.next();
 		System.out.println("Year: ");
+		System.out.print("==> ");
 		int ano = validateInt(scan);
-		scan.nextLine();
 
 		System.out.println("Magazine: ");
+		System.out.print("==> ");
 		String revista = scan.nextLine();
+		scan.nextLine();
 
 		System.out.println("Volume: ");
+		System.out.print("==> ");
 		String volume = scan.nextLine();
 
 		System.out.println("Number: ");
+		System.out.print("==> ");
 		int numero = validateInt(scan);
-		scan.nextLine();
 
 		System.out.println("Page: ");
+		System.out.print("==> ");
 		String pagina = scan.nextLine();
+		scan.next();
 
 		System.out.println("Citations: ");
+		System.out.print("==> ");
 		int citacoes = validateInt(scan);
 		scan.nextLine();
 
