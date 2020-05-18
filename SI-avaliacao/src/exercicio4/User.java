@@ -155,6 +155,22 @@ public class User implements Serializable {
         this.listPubs = listPubs;
     }
 
+    public ArrayList<Integer> removePubs(ArrayList<Integer> itemsToRemove){
+
+        ArrayList<Integer> doiToRemove = new ArrayList<>();
+
+        for (int i = 0; i < itemsToRemove.size(); i++) {
+
+            doiToRemove.add(listPubs.get(itemsToRemove.get(i)).getDOI())
+
+            listPubs.remove(itemsToRemove.get(i));
+            
+        }
+
+        return doiToRemove;
+
+    }
+
     class SortbyYear implements Comparator<Publication> {
 
         public int compare(Publication a, Publication b) {

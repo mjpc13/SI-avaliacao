@@ -4,6 +4,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class ScholarClient {
@@ -76,6 +77,8 @@ public class ScholarClient {
 					}
 
 					else if (menu2.equals("4")) {
+
+						// look for author publications in the pub list
 
 					}
 
@@ -293,6 +296,78 @@ public class ScholarClient {
 		scan.nextLine();
 
 		sch.addNewPublication(autores, titulo, ano, revista, volume, numero, pagina, citacoes, myself);
+
+	}
+
+	public static void removePublications(ScholarInterface sch, Scanner scan, User myself) throws Exception {
+
+		myself.printPublications(true);
+
+		if (myself.getListPubs() == null) {
+
+		}
+
+		else {
+
+			String[] options = new String[myself.getListPubs().size()];
+
+			ArrayList<Integer> itemsToRemove = new ArrayList<>();
+
+			for (int i = 0; i < myself.getListPubs().size(); i++) {
+				options[i] = String.valueOf(i);
+			}
+
+			System.out.println("Choose what publications you want to remove: (ex: 1,3,4)");
+			System.out.print("==> ");
+			String resposta = scan.nextLine();
+
+			String[] stripedAnswers = resposta.split(",");
+
+			for (int i = 0; i < stripedAnswers.length; i++) {
+
+				if (isNumber(stripedAnswers[i])) {
+
+					if (Integer.parseInt(stripedAnswers[i]) >= 0
+							&& Integer.parseInt(stripedAnswers[i]) <= stripedAnswers.length) {
+
+						itemsToRemove.add(Integer.parseInt(stripedAnswers[i]));
+
+					}
+
+				}
+
+			}
+
+			Collections.sort(itemsToRemove);
+			Collections.reverse(itemsToRemove);
+			sch.removePub(myself, itemsToRemove);
+
+		}
+
+	}
+
+	private static boolean isNumber(String str) {
+
+		try {
+			if (str == null) {
+				return false;
+			}
+
+			if (str.substring(0, 1).equals(" ")) {
+				str = str.substring(1);
+			}
+
+			int n = Integer.parseInt(str);
+			return true;
+
+		} catch (NumberFormatException e) {
+
+			return false;
+		}
+
+	}
+
+	public static void lookForPubs(ScholarInterface sch, Scanner scan, User myself) {
 
 	}
 

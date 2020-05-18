@@ -20,4 +20,6 @@ public interface ScholarInterface extends Remote {
 
     public void writeToFiles() throws Exception;
 
+    public void removePub(User myself, ArrayList<Integer> itemsToRemove) throws Exception;
+
 }

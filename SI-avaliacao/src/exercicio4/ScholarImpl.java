@@ -123,4 +123,13 @@ public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface
 
     }
 
+    @Override
+    public void removePub(User myself, ArrayList<Integer> itemsToRemove) throws Exception {
+        // TODO Auto-generated method stub
+
+        ArrayList<Integer> DOIs = myself.removePubs(itemsToRemove);
+        fm.removePubs(DOIs);
+
+    }
+
 }

@@ -115,4 +115,20 @@ public class FileManagement implements Serializable {
         }
 
     }
+
+    public void removePubs(ArrayList<Integer> DOIs) {
+
+        for (int i = 0; i < DOIs.size(); i++) {
+
+            for (int j = 0; j < pub_list.size(); j++) {
+
+                if (DOIs.get(i) == pub_list.get(j).getDOI()) {
+                    pub_list.remove(j);
+                }
+
+            }
+        }
+
+    }
+
 }
