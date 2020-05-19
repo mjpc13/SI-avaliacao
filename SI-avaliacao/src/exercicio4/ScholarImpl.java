@@ -55,9 +55,9 @@ public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface
                                                                                                             // adicionada
         fm.addPublication(pub); // adiciona a publicação a lista que contem TODAS as pubs, e envia TRUE;
         myself.addPublication(pub); // adiciona a publicação a lista de pubs daquele usuário;
+
         fm.updateUserInfo(myself);
 
-        // fm.writePublications(); // escreve no ficheiro a nova lista de Publications
         return true;
     }
 
@@ -131,6 +131,14 @@ public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface
         DOIs = myself.removeUserPubs(itemsToRemove);
         fm.removePubs(DOIs);
         fm.updateUserInfo(myself);
+
+    }
+
+    public void saveInformation(ScholarInterface sch, User myself) {
+
+        fm.updateUserInfo(myself);
+        fm.writeUsers();
+        fm.writePublications();
 
     }
 

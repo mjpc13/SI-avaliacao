@@ -85,7 +85,7 @@ public class ScholarClient {
 
 					else if (menu2.equals("4")) {
 
-						// look for author publications in the pub list
+						lookForPubs(sch, scan, myself);// look for author publications in the pub list
 
 					}
 
@@ -374,7 +374,50 @@ public class ScholarClient {
 
 	}
 
-	public static void lookForPubs(ScholarInterface sch, Scanner scan, User myself) {
+	public static void lookForPubs(ScholarInterface sch, Scanner scan, User myself) throws Exception {
+
+		ArrayList<Publication> listOfPublications = sch.getPublications();
+		ArrayList<Integer> options = new ArrayList<>();
+		ArrayList<String> autores = new ArrayList<>();
+		int doi, value;
+
+		for (int i = 0; i < listOfPublications.size(); i++) {
+
+			autores = listOfPublications.get(i).getListaAutores();
+			doi = listOfPublications.get(i).getDOI();
+
+			if (autores.contains(myself.getNome()) && !myself.getListDois().contains(doi)) {
+
+				System.out.println(i + ") " + listOfPublications.get(i));
+				options.add(i);
+
+			}
+
+		}
+
+		System.out.println("Choose what publications you want to add: (ex: 1,3,4)");
+		System.out.print("==> ");
+		String resposta = scan.nextLine();
+
+		String[] stripedAnswers = resposta.split(",");
+
+		for (int i = 0; i < stripedAnswers.length; i++) {
+
+			if (isNumber(stripedAnswers[i])) {
+
+				value = Integer.parseInt(stripedAnswers[i]);
+
+				if (options.contains(value)) {
+
+					myself.addPublication(listOfPublications.get(i));
+
+				}
+
+			}
+
+		}
+
+		sch.saveInformation(sch, myself);
 
 	}
 

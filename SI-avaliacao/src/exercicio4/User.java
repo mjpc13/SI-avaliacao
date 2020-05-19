@@ -12,6 +12,7 @@ public class User implements Serializable {
 
     private String nome, mail, password, afi;
     public ArrayList<Publication> listPubs;
+    public ArrayList<Integer> listDois;
     public int totalCitations;
 
     public User(String nome2, String mail2, String password2, String afi2) {
@@ -22,6 +23,7 @@ public class User implements Serializable {
         this.password = password2;
         this.totalCitations = 0;
         this.listPubs = new ArrayList<>();
+        this.listDois = new ArrayList<>();
 
     }
 
@@ -68,6 +70,13 @@ public class User implements Serializable {
     }
 
     /**
+     * @param listDois the listDois to set
+     */
+    public void setListDois(ArrayList<Integer> listDois) {
+        this.listDois = listDois;
+    }
+
+    /**
      * @param mail the mail to set
      */
     public void setMail(String mail) {
@@ -82,6 +91,13 @@ public class User implements Serializable {
     }
 
     /**
+     * @return the listDois
+     */
+    public ArrayList<Integer> getListDois() {
+        return listDois;
+    }
+
+    /**
      * @param password the password to set
      */
     public void setPassword(String password) {
@@ -91,6 +107,7 @@ public class User implements Serializable {
     public void addPublication(Publication pub) {
 
         listPubs.add(pub);
+        listDois.add(pub.getDOI());
         totalCitations += pub.getCitacoes();
 
     }
@@ -129,17 +146,15 @@ public class User implements Serializable {
 
         }
 
-        // E não entendo o que é o H
-        
         int H = 0;
-        for (int i = 0; i <= totalCitations; i++){
+        for (int i = 0; i <= totalCitations; i++) {
             int nPubs = 0;
             for (Publication pub : listPubs) {
                 if (pub.getCitacoes() >= i) {
                     nPubs++;
                 }
             }
-            if (nPubs >= i){
+            if (nPubs >= i) {
                 H = i;
             }
         }

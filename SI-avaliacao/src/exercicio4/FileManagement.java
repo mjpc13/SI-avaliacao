@@ -109,6 +109,7 @@ public class FileManagement implements Serializable {
             if (user.getMail().equals(u.getMail())) {
 
                 user.setListPubs(u.getListPubs());
+                user.setListDois(u.getListDois());
 
             }
 
