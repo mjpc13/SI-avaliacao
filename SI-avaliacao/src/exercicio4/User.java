@@ -113,22 +113,8 @@ public class User implements Serializable {
                 System.out.println(i + ") " + listPubs.get(i) + "\n");
 
             }
-        }
-
-    }
-
-    public void removePublication(ArrayList<Integer> listOfDoi) {
-
-        for (Publication pub : listPubs) {
-
-            if (listOfDoi.contains(pub.getDOI())) {
-
-                listPubs.remove(pub); // posso ter que meter um for normal
-
-            }
 
         }
-
     }
 
     public void showStats() {
@@ -169,16 +155,17 @@ public class User implements Serializable {
         this.listPubs = listPubs;
     }
 
-    public ArrayList<Integer> removePubs(ArrayList<Integer> itemsToRemove){
+    public ArrayList<Integer> removeUserPubs(ArrayList<Integer> itemsToRemove) {
 
         ArrayList<Integer> doiToRemove = new ArrayList<>();
-
+        int tr;
         for (int i = 0; i < itemsToRemove.size(); i++) {
 
-            doiToRemove.add(listPubs.get(itemsToRemove.get(i)).getDOI())
+            tr = itemsToRemove.get(i);
+            doiToRemove.add(listPubs.get(tr).getDOI());
 
-            listPubs.remove(itemsToRemove.get(i));
-            
+            listPubs.remove(tr);
+
         }
 
         return doiToRemove;
