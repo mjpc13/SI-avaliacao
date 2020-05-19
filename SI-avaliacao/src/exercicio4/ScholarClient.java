@@ -34,7 +34,14 @@ public class ScholarClient {
 
 				if (menu1.equals("1")) {
 
-					logged = registerMenu(sch, scan);
+					email = registerMenu(sch, scan);
+
+					if (email == null) {
+						logged = false;
+					} else {
+
+						logged = true;
+					}
 				}
 
 				else if (menu1.equals("2")) {
@@ -83,7 +90,7 @@ public class ScholarClient {
 					}
 
 					else if (menu2.equals("5")) {
-
+						removePublications(sch, scan, myself);
 					}
 
 					else if (menu2.equals("6")) {
@@ -178,7 +185,7 @@ public class ScholarClient {
 
 	}
 
-	public static boolean registerMenu(ScholarInterface sch, Scanner scan) throws Exception {
+	public static String registerMenu(ScholarInterface sch, Scanner scan) throws Exception {
 
 		System.out.println("=".repeat(20) + "Register:" + "=".repeat(20));
 
@@ -202,10 +209,10 @@ public class ScholarClient {
 
 		if (sch.addNewUser(name, email, password, afi)) {
 			System.out.println("> User Successfully Registered!");
-			return true;
+			return email;
 		} else {
 			System.out.println("> This user already exists.");
-			return false;
+			return null;
 		}
 
 	}
@@ -274,8 +281,8 @@ public class ScholarClient {
 
 		System.out.println("Magazine: ");
 		System.out.print("==> ");
+		scan.next();
 		String revista = scan.nextLine();
-		scan.nextLine();
 
 		System.out.println("Volume: ");
 		System.out.print("==> ");
@@ -287,8 +294,8 @@ public class ScholarClient {
 
 		System.out.println("Page: ");
 		System.out.print("==> ");
-		String pagina = scan.nextLine();
 		scan.next();
+		String pagina = scan.nextLine();
 
 		System.out.println("Citations: ");
 		System.out.print("==> ");
@@ -303,7 +310,7 @@ public class ScholarClient {
 
 		myself.printPublications(true);
 
-		if (myself.getListPubs() == null) {
+		if (myself.getListPubs() == null || myself.getListPubs().size() == 0) {
 
 		}
 
