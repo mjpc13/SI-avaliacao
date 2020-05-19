@@ -144,8 +144,22 @@ public class User implements Serializable {
         }
 
         // E não entendo o que é o H
+        
+        int H = 0;
+        for (int i = 0; i <= totalCitations; i++){
+            int nPubs = 0;
+            for (Publication pub : listPubs) {
+                if (pub.getCitacoes() >= i) {
+                    nPubs++;
+                }
+            }
+            if (nPubs >= i){
+                H = i;
+            }
+        }
 
         System.out.println(i10);
+        System.out.println(H);
     }
 
     /**
