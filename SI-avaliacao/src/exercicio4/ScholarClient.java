@@ -25,6 +25,8 @@ public class ScholarClient {
 			boolean connected = true, logged = false;
 			String[] options_menu1 = { "1", "2", "3" };
 			String[] options_menu2 = { "1", "2", "3", "4", "5", "6", "7" };
+			int fails = 0;
+			User myself;
 
 			while (connected) {
 
@@ -63,7 +65,26 @@ public class ScholarClient {
 				}
 
 				while (logged) {
-					User myself = sch.getUserData(email);
+
+					while (true) {
+
+						try {
+
+							myself = sch.getUserData(email);
+							break;
+
+						} catch (Exception e) {
+							System.out.println("> Connection with lost, please try again in 3 seconds.");
+							fails++;
+							Thread.sleep(3000);
+						}
+
+						if (fails == 10) {
+							System.out.println("> Program terminated. Cause: Lost Connection with Server");
+							System.exit(0);
+						}
+
+					}
 
 					menu2Print();
 					String menu2 = inputVerification(options_menu2, scan);
@@ -164,8 +185,10 @@ public class ScholarClient {
 	}
 
 	public static String loginMenu(ScholarInterface sch, Scanner scan) throws Exception {
-
+		int fails = 0;
 		System.out.println("=".repeat(20) + " Login: " + "=".repeat(20));
+
+		System.out.println("> Program terminated. Cause: Lost Connection with Server");
 
 		String email = emailInput(scan);
 
@@ -174,19 +197,33 @@ public class ScholarClient {
 		String password = scan.nextLine();
 		// scan.next();
 
-		if (!sch.loginVerification(email, password)) {
-			System.out.println("> Invalid user. If you are a new user please register first.");
+		while (true) {
 
-			return null;
-		} else {
-			System.out.println("> Login Successful.");
-			return email;
+			try {
+				if (!sch.loginVerification(email, password)) {
+					System.out.println("> Invalid user. If you are a new user please register first.");
+					return null;
+				} else {
+					System.out.println("> Login Successful.");
+					return email;
+				}
+			} catch (Exception e) {
+				System.out.println("> Connection with lost, please try again in 3 seconds.");
+				fails++;
+				Thread.sleep(3000);
+			}
+
+			if (fails == 10) {
+				System.out.println("> Program terminated. Cause: Lost Connection with Server");
+				System.exit(0);
+			}
+
 		}
 
 	}
 
 	public static String registerMenu(ScholarInterface sch, Scanner scan) throws Exception {
-
+		int fails = 0;
 		System.out.println("=".repeat(20) + "Register:" + "=".repeat(20));
 
 		System.out.println("Name: ");
@@ -207,12 +244,27 @@ public class ScholarClient {
 		String afi = scan.nextLine();
 		// scan.next();
 
-		if (sch.addNewUser(name, email, password, afi)) {
-			System.out.println("> User Successfully Registered!");
-			return email;
-		} else {
-			System.out.println("> This user already exists.");
-			return null;
+		while (true) {
+
+			try {
+				if (sch.addNewUser(name, email, password, afi)) {
+					System.out.println("> User Successfully Registered!");
+					return email;
+				} else {
+					System.out.println("> This user already exists.");
+					return null;
+				}
+			} catch (Exception e) {
+				System.out.println("> Connection with lost, please try again in 3 seconds.");
+				fails++;
+				Thread.sleep(3000);
+			}
+
+			if (fails == 10) {
+				System.out.println("> Program terminated. Cause: Lost Connection with Server");
+				System.exit(0);
+			}
+
 		}
 
 	}
@@ -254,7 +306,7 @@ public class ScholarClient {
 	}
 
 	public static void addPub(ScholarInterface sch, Scanner scan, User myself) throws Exception {
-
+		int fails = 0;
 		System.out.println("Authors: (ex: lastName1, FirstName1;lastName2, FirstName2)");
 		System.out.print("==> ");
 		String string_autores = scan.nextLine();
@@ -302,12 +354,32 @@ public class ScholarClient {
 		int citacoes = validateInt(scan);
 		scan.nextLine();
 
-		sch.addNewPublication(autores, titulo, ano, revista, volume, numero, pagina, citacoes, myself);
+		while (true) {
+
+			try {
+
+				sch.addNewPublication(autores, titulo, ano, revista, volume, numero, pagina, citacoes, myself);
+
+				break;
+
+			} catch (Exception e) {
+				System.out.println("> Connection with lost, please try again in 3 seconds.");
+				fails++;
+				Thread.sleep(3000);
+			}
+
+			if (fails == 10) {
+				System.out.println("> Program terminated. Cause: Lost Connection with Server");
+				System.exit(0);
+			}
+
+		}
 
 	}
 
 	public static void removePublications(ScholarInterface sch, Scanner scan, User myself) throws Exception {
 
+		int fails = 0;
 		myself.printPublications(true);
 
 		if (myself.getListPubs() == null || myself.getListPubs().size() == 0) {
@@ -347,7 +419,27 @@ public class ScholarClient {
 
 			Collections.sort(itemsToRemove);
 			Collections.reverse(itemsToRemove);
-			sch.removePub(myself, itemsToRemove);
+
+			while (true) {
+
+				try {
+
+					sch.removePub(myself, itemsToRemove);
+
+					break;
+
+				} catch (Exception e) {
+					System.out.println("> Connection with lost, please try again in 3 seconds.");
+					fails++;
+					Thread.sleep(3000);
+				}
+
+				if (fails == 10) {
+					System.out.println("> Program terminated. Cause: Lost Connection with Server");
+					System.exit(0);
+				}
+
+			}
 
 		}
 
@@ -376,6 +468,7 @@ public class ScholarClient {
 
 	public static void lookForPubs(ScholarInterface sch, Scanner scan, User myself) throws Exception {
 
+		int fails = 0;
 		ArrayList<Publication> listOfPublications = sch.getPublications();
 		ArrayList<Integer> options = new ArrayList<>();
 		ArrayList<String> autores = new ArrayList<>();
@@ -417,7 +510,26 @@ public class ScholarClient {
 
 		}
 
-		sch.saveInformation(sch, myself);
+		while (true) {
+
+			try {
+
+				sch.saveInformation(sch, myself);
+
+				break;
+
+			} catch (Exception e) {
+				System.out.println("> Connection with lost, please try again in 3 seconds.");
+				fails++;
+				Thread.sleep(3000);
+			}
+
+			if (fails == 10) {
+				System.out.println("> Program terminated. Cause: Lost Connection with Server");
+				System.exit(0);
+			}
+
+		}
 
 	}
 
