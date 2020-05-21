@@ -180,6 +180,7 @@ public class User implements Serializable {
             doiToRemove.add(listPubs.get(tr).getDOI());
 
             listPubs.remove(tr);
+            listDois.remove(tr);
 
         }
 
