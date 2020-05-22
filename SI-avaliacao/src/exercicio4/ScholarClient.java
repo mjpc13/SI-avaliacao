@@ -70,7 +70,39 @@ public class ScholarClient {
 
 				else { // O cliente optou por encerrar o programa e a conexão
 
-					sch.writeToFiles(); // guarda as variáveis do objecto fm nos ficheiros préviamente criados
+					while (true) { // ciclo para fazer o handling de falha de conexão com o Servidor
+
+						try { // tenta usar o método addNewPublication(...) que está no obj sch
+
+							sch.writeToFiles(); // guarda as variáveis do objecto fm nos ficheiros préviamente criados
+							break;
+
+						} catch (IOException e) {
+
+							System.out.println("> Connection lost, trying again in 3 seconds");
+							fails++;
+							Thread.sleep(3000);
+
+							try {
+								registry = LocateRegistry.getRegistry("localhost", 1099);
+								sch = (ScholarInterface) registry.lookup("Scholar");
+
+							} catch (Exception d) {
+								System.out.println("> Failed to establish connection");
+							}
+
+						} catch (Exception idk) {
+							System.out.print("> An error has occurred: ");
+							idk.printStackTrace();
+						}
+
+						if (fails == 10) {
+							System.out.println("> Program terminated. Cause: Lost Connection with Server");
+							System.exit(0);
+						}
+
+					}
+
 					connected = false; // vai encerrar o programa
 
 				}
@@ -95,6 +127,9 @@ public class ScholarClient {
 
 								sch = (ScholarInterface) registry.lookup("Scholar"); // tenta procurar novamente o
 																						// registry
+								sch.writeToFiles(); // tenta gravar os ficheiros (é uma maneira de tentar salvaguardar
+													// usuários que tenham problemas de conexão sem alterar a
+													// performance do programa)
 
 							} catch (Exception d) { // caso não encontre o Registry
 								System.out.println("> Failed to establish connection");
@@ -151,7 +186,38 @@ public class ScholarClient {
 					}
 
 					else if (menu2.equals("7")) { // Termina a sessão deste user
-						sch.writeToFiles();
+
+						while (true) {
+
+							try {
+
+								sch.writeToFiles();
+								break;
+							} catch (IOException e) {
+
+								System.out.println("> Connection lost, trying again in 3 seconds");
+								fails++;
+								Thread.sleep(3000);
+
+								try {
+									registry = LocateRegistry.getRegistry("localhost", 1099);
+									sch = (ScholarInterface) registry.lookup("Scholar");
+
+								} catch (Exception d) {
+									System.out.println("> Failed to establish connection");
+								}
+
+							} catch (Exception idk) {
+								System.out.print("> An error has occurred: ");
+								idk.printStackTrace();
+							}
+
+							if (fails == 10) {
+								System.out.println("> Program terminated. Cause: Lost Connection with Server");
+								System.exit(0);
+							}
+
+						}
 						logged = false;
 					}
 
@@ -253,6 +319,8 @@ public class ScholarClient {
 				try {
 					Registry registry = LocateRegistry.getRegistry("localhost", 1099);
 					sch = (ScholarInterface) registry.lookup("Scholar");
+					sch.writeToFiles(); // tenta gravar os ficheiros (é uma maneira de tentar salvaguardar usuários que
+										// tenham problemas de conexão sem alterar a performance do programa)
 
 				} catch (Exception d) {
 					System.out.println("> Failed to establish connection");
@@ -319,6 +387,8 @@ public class ScholarClient {
 				try {
 					Registry registry = LocateRegistry.getRegistry("localhost", 1099);
 					sch = (ScholarInterface) registry.lookup("Scholar");
+					sch.writeToFiles(); // tenta gravar os ficheiros (é uma maneira de tentar salvaguardar usuários que
+										// tenham problemas de conexão sem alterar a performance do programa)
 
 				} catch (Exception d) {
 					System.out.println("> Failed to establish connection");
@@ -453,6 +523,8 @@ public class ScholarClient {
 				try {
 					Registry registry = LocateRegistry.getRegistry("localhost", 1099);
 					sch = (ScholarInterface) registry.lookup("Scholar");
+					sch.writeToFiles(); // tenta gravar os ficheiros (é uma maneira de tentar salvaguardar usuários que
+										// tenham problemas de conexão sem alterar a performance do programa)
 
 				} catch (Exception d) {
 					System.out.println("> Failed to establish connection");
@@ -544,6 +616,8 @@ public class ScholarClient {
 					try {
 						Registry registry = LocateRegistry.getRegistry("localhost", 1099);
 						sch = (ScholarInterface) registry.lookup("Scholar");
+						sch.writeToFiles(); // tenta gravar os ficheiros (é uma maneira de tentar salvaguardar usuários
+											// que tenham problemas de conexão sem alterar a performance do programa)
 
 					} catch (Exception d) {
 						System.out.println("> Failed to establish connection");
@@ -614,6 +688,8 @@ public class ScholarClient {
 				try {
 					Registry registry = LocateRegistry.getRegistry("localhost", 1099);
 					sch = (ScholarInterface) registry.lookup("Scholar");
+					sch.writeToFiles(); // tenta gravar os ficheiros (é uma maneira de tentar salvaguardar usuários que
+										// tenham problemas de conexão sem alterar a performance do programa)
 
 				} catch (Exception d) {
 					System.out.println("> Failed to establish connection");
@@ -698,6 +774,8 @@ public class ScholarClient {
 				try {
 					Registry registry = LocateRegistry.getRegistry("localhost", 1099);
 					sch = (ScholarInterface) registry.lookup("Scholar");
+					sch.writeToFiles(); // tenta gravar os ficheiros (é uma maneira de tentar salvaguardar usuários que
+										// tenham problemas de conexão sem alterar a performance do programa)
 
 				} catch (Exception d) {
 					System.out.println("> Failed to establish connection");
