@@ -80,7 +80,7 @@ public class ScholarClient {
 							Thread.sleep(3000);
 
 							try {
-								// registry = LocateRegistry.getRegistry("localhost", 1099);
+
 								sch = (ScholarInterface) registry.lookup("Scholar");
 
 							} catch (Exception d) {
@@ -274,9 +274,19 @@ public class ScholarClient {
 					return null;
 				}
 			} catch (Exception e) {
-				System.out.println("> Connection with lost, please try again in 3 seconds.");
+
+				System.out.println("> Connection lost, trying again in 3 seconds");
 				fails++;
 				Thread.sleep(3000);
+
+				try {
+					Registry registry = LocateRegistry.getRegistry("localhost", 1099);
+					sch = (ScholarInterface) registry.lookup("Scholar");
+
+				} catch (Exception d) {
+					System.out.println("> Failed to establish connection");
+				}
+
 			}
 
 			if (fails == 10) {
@@ -373,17 +383,27 @@ public class ScholarClient {
 		int citacoes = validateInt(scan);
 		scan.nextLine();
 
-		label: while (true) {
+		while (true) {
 
 			try {
 
 				sch.addNewPublication(autores, titulo, ano, revista, volume, numero, pagina, citacoes, myself);
-				break label;
+				break;
 
 			} catch (Exception e) {
-				System.out.println("> Connection with lost, please try again in 3 seconds.");
+
+				System.out.println("> Connection lost, trying again in 3 seconds");
 				fails++;
 				Thread.sleep(3000);
+
+				try {
+					Registry registry = LocateRegistry.getRegistry("localhost", 1099);
+					sch = (ScholarInterface) registry.lookup("Scholar");
+
+				} catch (Exception d) {
+					System.out.println("> Failed to establish connection");
+				}
+
 			}
 
 			if (fails == 10) {
@@ -453,9 +473,19 @@ public class ScholarClient {
 					break;
 
 				} catch (Exception e) {
-					System.out.println("> Connection with lost, please try again in 3 seconds.");
+
+					System.out.println("> Connection lost, trying again in 3 seconds");
 					fails++;
 					Thread.sleep(3000);
+
+					try {
+						Registry registry = LocateRegistry.getRegistry("localhost", 1099);
+						sch = (ScholarInterface) registry.lookup("Scholar");
+
+					} catch (Exception d) {
+						System.out.println("> Failed to establish connection");
+					}
+
 				}
 
 				if (fails == 10) {
@@ -546,9 +576,19 @@ public class ScholarClient {
 				break;
 
 			} catch (Exception e) {
-				System.out.println("> Connection with lost, please try again in 3 seconds.");
+
+				System.out.println("> Connection lost, trying again in 3 seconds");
 				fails++;
 				Thread.sleep(3000);
+
+				try {
+					Registry registry = LocateRegistry.getRegistry("localhost", 1099);
+					sch = (ScholarInterface) registry.lookup("Scholar");
+
+				} catch (Exception d) {
+					System.out.println("> Failed to establish connection");
+				}
+
 			}
 
 			if (fails == 10) {
