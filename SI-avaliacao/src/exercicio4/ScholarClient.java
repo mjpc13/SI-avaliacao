@@ -229,22 +229,19 @@ public class ScholarClient {
 		System.out.println("Name: ");
 		System.out.print("==> ");
 		String name = scan.nextLine();
-		// scan.next();
 
 		String email = emailInput(scan);
 
 		System.out.println("Password: ");
 		System.out.print("==> ");
 		String password = scan.nextLine();
-		// scan.next();
 
 		System.out.println("Afiliações: ");
 		System.out.print("==> ");
 		scan.next();
 		String afi = scan.nextLine();
-		// scan.next();
 
-		while (fails <= 10) {
+		while (true) {
 
 			try {
 				if (sch.addNewUser(name, email, password, afi)) {
@@ -260,10 +257,10 @@ public class ScholarClient {
 				Thread.sleep(3000);
 			}
 
-			// if (fails == 10) {
-			// 	System.out.println("> Program terminated. Cause: Lost Connection with Server");
-			// 	System.exit(0);
-			// }
+			if (fails == 10) {
+				System.out.println("> Program terminated. Cause: Lost Connection with Server");
+				System.exit(0);
+			}
 
 		}
 
