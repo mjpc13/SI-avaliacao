@@ -21,7 +21,7 @@ public class Publication implements Serializable {
         this.ano = ano;
         this.numero = numero;
         this.paginas = pagina;
-        this.setCitacoes(citacoes);
+        this.citacoes = citacoes;
 
         // para fazer o DOI
 

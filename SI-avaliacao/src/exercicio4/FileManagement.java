@@ -110,6 +110,7 @@ public class FileManagement implements Serializable {
 
                 user.setListPubs(u.getListPubs());
                 user.setListDois(u.getListDois());
+                user.setTotalCitations(u.getTotalCitations());
 
             }
 

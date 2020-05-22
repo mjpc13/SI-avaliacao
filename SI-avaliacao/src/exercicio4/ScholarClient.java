@@ -74,9 +74,19 @@ public class ScholarClient {
 							break;
 
 						} catch (Exception e) {
-							System.out.println("> Connection with lost, please try again in 3 seconds.");
+
+							System.out.println("> Connection lost, trying again in 3 seconds");
 							fails++;
 							Thread.sleep(3000);
+
+							try {
+								// registry = LocateRegistry.getRegistry("localhost", 1099);
+								sch = (ScholarInterface) registry.lookup("Scholar");
+
+							} catch (Exception d) {
+								System.out.println("> Failed to establish connection");
+							}
+
 						}
 
 						if (fails == 10) {
@@ -86,6 +96,7 @@ public class ScholarClient {
 
 					}
 
+					ArrayList<Publication> lista = sch.getPublications();
 					menu2Print();
 					String menu2 = inputVerification(options_menu2, scan);
 					System.out.println("=".repeat(55));
@@ -188,8 +199,6 @@ public class ScholarClient {
 		int fails = 0;
 		System.out.println("=".repeat(20) + " Login: " + "=".repeat(20));
 
-		System.out.println("> Program terminated. Cause: Lost Connection with Server");
-
 		String email = emailInput(scan);
 
 		System.out.println("Password: ");
@@ -206,11 +215,22 @@ public class ScholarClient {
 				} else {
 					System.out.println("> Login Successful.");
 					return email;
+
 				}
 			} catch (Exception e) {
-				System.out.println("> Connection with lost, please try again in 3 seconds.");
+
+				System.out.println("> Connection lost, trying again in 3 seconds");
 				fails++;
 				Thread.sleep(3000);
+
+				try {
+					Registry registry = LocateRegistry.getRegistry("localhost", 1099);
+					sch = (ScholarInterface) registry.lookup("Scholar");
+
+				} catch (Exception d) {
+					System.out.println("> Failed to establish connection");
+				}
+
 			}
 
 			if (fails == 10) {
@@ -229,17 +249,19 @@ public class ScholarClient {
 		System.out.println("Name: ");
 		System.out.print("==> ");
 		String name = scan.nextLine();
+		// scan.next();
 
 		String email = emailInput(scan);
 
 		System.out.println("Password: ");
 		System.out.print("==> ");
 		String password = scan.nextLine();
+		scan.nextLine();
 
 		System.out.println("Afiliações: ");
 		System.out.print("==> ");
-		scan.next();
 		String afi = scan.nextLine();
+		// scan.next();
 
 		while (true) {
 
@@ -327,10 +349,10 @@ public class ScholarClient {
 		System.out.println("Year: ");
 		System.out.print("==> ");
 		int ano = validateInt(scan);
+		scan.nextLine();
 
 		System.out.println("Magazine: ");
 		System.out.print("==> ");
-		scan.next();
 		String revista = scan.nextLine();
 
 		System.out.println("Volume: ");
@@ -340,10 +362,10 @@ public class ScholarClient {
 		System.out.println("Number: ");
 		System.out.print("==> ");
 		int numero = validateInt(scan);
+		scan.nextLine();
 
 		System.out.println("Page: ");
 		System.out.print("==> ");
-		scan.next();
 		String pagina = scan.nextLine();
 
 		System.out.println("Citations: ");
@@ -351,13 +373,12 @@ public class ScholarClient {
 		int citacoes = validateInt(scan);
 		scan.nextLine();
 
-		while (true) {
+		label: while (true) {
 
 			try {
 
 				sch.addNewPublication(autores, titulo, ano, revista, volume, numero, pagina, citacoes, myself);
-
-				break;
+				break label;
 
 			} catch (Exception e) {
 				System.out.println("> Connection with lost, please try again in 3 seconds.");
@@ -376,6 +397,7 @@ public class ScholarClient {
 
 	public static void removePublications(ScholarInterface sch, Scanner scan, User myself) throws Exception {
 
+		String str = "";
 		int fails = 0;
 		myself.printPublications(true);
 
@@ -401,12 +423,17 @@ public class ScholarClient {
 
 			for (int i = 0; i < stripedAnswers.length; i++) {
 
-				if (isNumber(stripedAnswers[i])) {
+				if (stripedAnswers[i].substring(0, 1).equals(" ")) {
+					str = stripedAnswers[i].substring(1);
+				} else {
+					str = stripedAnswers[i];
+				}
 
-					if (Integer.parseInt(stripedAnswers[i]) >= 0
-							&& Integer.parseInt(stripedAnswers[i]) <= stripedAnswers.length) {
+				if (isNumber(str)) {
 
-						itemsToRemove.add(Integer.parseInt(stripedAnswers[i]));
+					if (Integer.parseInt(str) >= 0 && Integer.parseInt(str) <= stripedAnswers.length) {
+
+						itemsToRemove.add(Integer.parseInt(str));
 
 					}
 
@@ -449,15 +476,11 @@ public class ScholarClient {
 				return false;
 			}
 
-			if (str.substring(0, 1).equals(" ")) {
-				str = str.substring(1);
-			}
-
 			int n = Integer.parseInt(str);
 			return true;
 
 		} catch (NumberFormatException e) {
-
+			System.out.println("Error:" + e);
 			return false;
 		}
 
@@ -470,6 +493,7 @@ public class ScholarClient {
 		ArrayList<Integer> options = new ArrayList<>();
 		ArrayList<String> autores = new ArrayList<>();
 		int doi, value;
+		String str = "";
 
 		for (int i = 0; i < listOfPublications.size(); i++) {
 
@@ -493,13 +517,19 @@ public class ScholarClient {
 
 		for (int i = 0; i < stripedAnswers.length; i++) {
 
-			if (isNumber(stripedAnswers[i])) {
+			if (stripedAnswers[i].substring(0, 1).equals(" ")) {
+				str = stripedAnswers[i].substring(1);
+			} else {
+				str = stripedAnswers[i];
+			}
 
-				value = Integer.parseInt(stripedAnswers[i]);
+			if (isNumber(str)) {
+
+				value = Integer.parseInt(str);
 
 				if (options.contains(value)) {
 
-					myself.addPublication(listOfPublications.get(i));
+					myself.addPublication(listOfPublications.get(value));
 
 				}
 

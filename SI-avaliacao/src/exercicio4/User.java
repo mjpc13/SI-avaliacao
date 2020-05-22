@@ -70,6 +70,20 @@ public class User implements Serializable {
     }
 
     /**
+     * @param totalCitations the totalCitations to set
+     */
+    public void setTotalCitations(int totalCitations) {
+        this.totalCitations = totalCitations;
+    }
+
+    /**
+     * @return the totalCitations
+     */
+    public int getTotalCitations() {
+        return totalCitations;
+    }
+
+    /**
      * @param listDois the listDois to set
      */
     public void setListDois(ArrayList<Integer> listDois) {
@@ -147,7 +161,7 @@ public class User implements Serializable {
         }
 
         int H = 0;
-        for (int i = 0; i <= 1000; i++) {
+        for (int i = 0; i <= totalCitations; i++) {
             int nPubs = 0;
             for (Publication pub : listPubs) {
                 if (pub.getCitacoes() >= i) {
