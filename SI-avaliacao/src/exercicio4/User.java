@@ -147,7 +147,7 @@ public class User implements Serializable {
         }
 
         int H = 0;
-        for (int i = 0; i <= totalCitations; i++) {
+        for (int i = 0; i <= 1000; i++) {
             int nPubs = 0;
             for (Publication pub : listPubs) {
                 if (pub.getCitacoes() >= i) {
@@ -159,8 +159,10 @@ public class User implements Serializable {
             }
         }
 
-        System.out.println(i10);
-        System.out.println(H);
+        System.out.println("The author's stats are:");
+        System.out.println("i10 = " + i10);
+        System.out.println("H = " + H);
+        System.out.println("Total Citations = " + totalCitations);
     }
 
     /**

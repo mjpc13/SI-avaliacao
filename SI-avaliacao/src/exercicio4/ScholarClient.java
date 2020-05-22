@@ -74,7 +74,7 @@ public class ScholarClient {
 							break;
 
 						} catch (Exception e) {
-							System.out.println("> Connection lost, please try again in 3 seconds.");
+							System.out.println("> Connection with lost, please try again in 3 seconds.");
 							fails++;
 							Thread.sleep(3000);
 						}
@@ -86,7 +86,6 @@ public class ScholarClient {
 
 					}
 
-					ArrayList<Publication> lista = sch.getPublications();
 					menu2Print();
 					String menu2 = inputVerification(options_menu2, scan);
 					System.out.println("=".repeat(55));
@@ -189,6 +188,8 @@ public class ScholarClient {
 		int fails = 0;
 		System.out.println("=".repeat(20) + " Login: " + "=".repeat(20));
 
+		System.out.println("> Program terminated. Cause: Lost Connection with Server");
+
 		String email = emailInput(scan);
 
 		System.out.println("Password: ");
@@ -243,7 +244,7 @@ public class ScholarClient {
 		String afi = scan.nextLine();
 		// scan.next();
 
-		while (true) {
+		while (fails <= 10) {
 
 			try {
 				if (sch.addNewUser(name, email, password, afi)) {
@@ -259,10 +260,10 @@ public class ScholarClient {
 				Thread.sleep(3000);
 			}
 
-			if (fails == 10) {
-				System.out.println("> Program terminated. Cause: Lost Connection with Server");
-				System.exit(0);
-			}
+			// if (fails == 10) {
+			// 	System.out.println("> Program terminated. Cause: Lost Connection with Server");
+			// 	System.exit(0);
+			// }
 
 		}
 
@@ -329,10 +330,10 @@ public class ScholarClient {
 		System.out.println("Year: ");
 		System.out.print("==> ");
 		int ano = validateInt(scan);
-		scan.nextLine();
 
 		System.out.println("Magazine: ");
 		System.out.print("==> ");
+		scan.next();
 		String revista = scan.nextLine();
 
 		System.out.println("Volume: ");
@@ -342,10 +343,10 @@ public class ScholarClient {
 		System.out.println("Number: ");
 		System.out.print("==> ");
 		int numero = validateInt(scan);
-		scan.nextLine();
 
 		System.out.println("Page: ");
 		System.out.print("==> ");
+		scan.next();
 		String pagina = scan.nextLine();
 
 		System.out.println("Citations: ");
@@ -353,12 +354,13 @@ public class ScholarClient {
 		int citacoes = validateInt(scan);
 		scan.nextLine();
 
-		label: while (true) {
+		while (true) {
 
 			try {
 
 				sch.addNewPublication(autores, titulo, ano, revista, volume, numero, pagina, citacoes, myself);
-				break label;
+
+				break;
 
 			} catch (Exception e) {
 				System.out.println("> Connection with lost, please try again in 3 seconds.");
@@ -377,7 +379,6 @@ public class ScholarClient {
 
 	public static void removePublications(ScholarInterface sch, Scanner scan, User myself) throws Exception {
 
-		String str = "";
 		int fails = 0;
 		myself.printPublications(true);
 
@@ -403,17 +404,12 @@ public class ScholarClient {
 
 			for (int i = 0; i < stripedAnswers.length; i++) {
 
-				if (stripedAnswers[i].substring(0, 1).equals(" ")) {
-					str = stripedAnswers[i].substring(1);
-				} else {
-					str = stripedAnswers[i];
-				}
+				if (isNumber(stripedAnswers[i])) {
 
-				if (isNumber(str)) {
+					if (Integer.parseInt(stripedAnswers[i]) >= 0
+							&& Integer.parseInt(stripedAnswers[i]) <= stripedAnswers.length) {
 
-					if (Integer.parseInt(str) >= 0 && Integer.parseInt(str) <= stripedAnswers.length) {
-
-						itemsToRemove.add(Integer.parseInt(str));
+						itemsToRemove.add(Integer.parseInt(stripedAnswers[i]));
 
 					}
 
@@ -456,11 +452,15 @@ public class ScholarClient {
 				return false;
 			}
 
+			if (str.substring(0, 1).equals(" ")) {
+				str = str.substring(1);
+			}
+
 			int n = Integer.parseInt(str);
 			return true;
 
 		} catch (NumberFormatException e) {
-			System.out.println("Error:" + e);
+
 			return false;
 		}
 
@@ -473,7 +473,6 @@ public class ScholarClient {
 		ArrayList<Integer> options = new ArrayList<>();
 		ArrayList<String> autores = new ArrayList<>();
 		int doi, value;
-		String str = "";
 
 		for (int i = 0; i < listOfPublications.size(); i++) {
 
@@ -497,19 +496,13 @@ public class ScholarClient {
 
 		for (int i = 0; i < stripedAnswers.length; i++) {
 
-			if (stripedAnswers[i].substring(0, 1).equals(" ")) {
-				str = stripedAnswers[i].substring(1);
-			} else {
-				str = stripedAnswers[i];
-			}
+			if (isNumber(stripedAnswers[i])) {
 
-			if (isNumber(str)) {
-
-				value = Integer.parseInt(str);
+				value = Integer.parseInt(stripedAnswers[i]);
 
 				if (options.contains(value)) {
 
-					myself.addPublication(listOfPublications.get(value));
+					myself.addPublication(listOfPublications.get(i));
 
 				}
 
