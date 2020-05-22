@@ -5,7 +5,9 @@ import java.util.ArrayList;
 
 public class Publication implements Serializable {
 
-    private static final long serialVersionUID = -8919133980077941736L;
+    private static final long serialVersionUID = -8919133980077941736L; // auto-generated serialVersionUID
+
+    // variáveis que cada publicação tem
     private String titulo, revista, volume, paginas;
     private int DOI;
     private int ano, numero, citacoes;
@@ -25,13 +27,14 @@ public class Publication implements Serializable {
 
         // para fazer o DOI
 
-        String id = "";
+        String id = ""; // id vai ser a String usada para criar o hashCode (que basicamente vai
+                        // funcionar como um Identificador unico de uma publicação)
 
-        for (String str : autores) {
+        for (String str : autores) { // adiciona todos os autores ao id
             id = id + str;
         }
-        id = id + titulo + revista + volume + pagina;
-        this.DOI = id.hashCode();
+        id = id + titulo + revista + volume + pagina + String.valueOf(ano); // adiciona algumas das restantes variáveis
+        this.DOI = id.hashCode(); // cria o DOI (que vai ser o hash code da string id)
 
     }
 
@@ -134,12 +137,6 @@ public class Publication implements Serializable {
         this.titulo = titulo;
     }
 
-    public void addAutor(String name) {
-
-        this.listaAutores.add(name);
-
-    }
-
     /**
      * @return the dOI
      */
@@ -147,7 +144,7 @@ public class Publication implements Serializable {
         return DOI;
     }
 
-    public String toString() {
+    public String toString() { // Returns a string representation of the object
 
         String print = "";
 
@@ -156,7 +153,7 @@ public class Publication implements Serializable {
         }
 
         print += titulo + ", " + String.valueOf(ano) + ", " + revista + ", " + volume + ", " + String.valueOf(numero)
-                + ", " + paginas + ", " + citacoes;
+                + ", " + paginas + ", (Times Cited =" + citacoes + ").";
 
         return print;
     }

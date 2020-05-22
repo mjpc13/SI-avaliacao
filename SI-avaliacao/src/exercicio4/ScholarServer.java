@@ -10,12 +10,13 @@ public class ScholarServer {
 		try {
 			FileManagement fm = new FileManagement();
 
-			System.out.println("\n");
+			System.out.println("\n"); // puramente estético
 
-			fm.readPublications(); // lê os ficheiros das publicações e dos Usuários;
-			fm.readUsers();
+			fm.readPublications(); // lê os ficheiros das publicações, caso não encontre cria um novo
+			fm.readUsers(); // lê os ficheiros dos users, caso não encontre cria um novo
 
-			ScholarImpl obj = new ScholarImpl(fm);
+			ScholarImpl obj = new ScholarImpl(fm); // cria o objecto do SchaloarImplement, e adiciona a variável fm, à
+													// implementação para o user ter o poder de ler e guardar alterações
 
 			// we programmatically create the registry. The following method creates and
 			// exports a Registry instance
@@ -24,7 +25,6 @@ public class ScholarServer {
 			// and use LocateRegistry.getRegistry(...)
 			Registry registry = LocateRegistry.createRegistry(1099);
 
-			// Question: could we use rebind here?
 			registry.bind("Scholar", obj);
 
 		} catch (Exception e) // catching Exception means that we are handling all errors in the same block

@@ -5,36 +5,40 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class FileManagement implements Serializable {
+public class FileManagement {
 
-    private static final long serialVersionUID = 9183947707057785900L;
+    private ArrayList<Publication> pub_list; // variável que contêm a lista de publicações atualizada
+    private ArrayList<User> user_list; // variável que contêm a lista de users atualizada
 
-    private ArrayList<Publication> pub_list;
-    private ArrayList<User> user_list;
+    public void readPublications() { // função que lé o ficheiro pubs.tmp e atualiza a variável pub_list segundo o
+                                     // Objecto presente no ficheiro;
 
-    public void readPublications() {
-
-        try (FileInputStream fis = new FileInputStream("SI-avaliacao/src/exercicio4/pubs.tmp")) {
+        try (FileInputStream fis = new FileInputStream("SI-avaliacao/src/exercicio4/pubs.tmp")) { // tenta aceder ao
+                                                                                                  // ficheiro, pode
+                                                                                                  // ocorrer IOException
             ObjectInputStream ois = new ObjectInputStream(fis);
 
-            this.pub_list = (ArrayList<Publication>) ois.readObject();
+            this.pub_list = (ArrayList<Publication>) ois.readObject(); // atualiza o valor de pub_list, segundo o
+                                                                       // ficheiro, pode ocorrer ClassCastException ou
+                                                                       // ClassNotFoundException
 
-            ois.close();
+            ois.close();// fecha o ios
 
-        } catch (ClassCastException | ClassNotFoundException | IOException e) {
-            // ficheiro nao encontrado ou dados corrompidos
-            this.pub_list = new ArrayList<>();
+        } catch (IOException e) {// ficheiro nao encontrado
+
+            this.pub_list = new ArrayList<>(); // cria uma lista vazia
             System.out.println("> Nao foram encontrados dados guardados: foi criado um novo ficheiro de Publicações");
-            writePublications(); // escreve dados atuais no disco
+            writePublications(); // escreve dados atuais no disco (neste caso a lista vazia)
 
+        } catch (ClassCastException | ClassNotFoundException d) {
+            d.printStackTrace(); // trata dos restantes erros
         }
 
     }
 
-    public void writePublications() {
+    public void writePublications() { // função que escreve a variável pub_list no ficheiro pubs.tmp e atualiza
 
         try (FileOutputStream fos = new FileOutputStream("SI-avaliacao/src/exercicio4/pubs.tmp")) {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -47,7 +51,7 @@ public class FileManagement implements Serializable {
 
     }
 
-    public void readUsers() {
+    public void readUsers() { // igual à readPublication() mas para os Users
 
         try (FileInputStream fis = new FileInputStream("SI-avaliacao/src/exercicio4/users.tmp")) {
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -56,16 +60,18 @@ public class FileManagement implements Serializable {
 
             ois.close();
 
-        } catch (ClassCastException | ClassNotFoundException | IOException e) {
+        } catch (IOException e) {
             // ficheiro nao encontrado ou dados corrompidos
             this.user_list = new ArrayList<>();
             System.out.println("> Nao foram encontrados dados guardados: foi criado um novo ficheiro de Users");
             writeUsers(); // escreve dados atuais no disco
+        } catch (ClassCastException | ClassNotFoundException d) {
+            d.printStackTrace();
         }
 
     }
 
-    public void writeUsers() {
+    public void writeUsers() { // igual à writePublication() mas para os Users
 
         try (FileOutputStream fos = new FileOutputStream("SI-avaliacao/src/exercicio4/users.tmp")) {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -92,25 +98,28 @@ public class FileManagement implements Serializable {
         return user_list;
     }
 
-    public void addPublication(Publication pub) {
+    public void addPublication(Publication pub) { // adiciona uma nova publicação à variável pub_list
 
         this.pub_list.add(pub);
 
     }
 
-    public void addUser(User u) {
+    public void addUser(User u) { // adiciona um novo user à variável user_list
         this.user_list.add(u);
     }
 
-    public void updateUserInfo(User u) {
+    public void updateUserInfo(User u) { // atualiza as caracteristicas do user u, na variável user_list
 
-        for (User user : user_list) {
+        for (User user : user_list) { // percorre todos os Users presentes no ArrayList (variável user_list)
 
-            if (user.getMail().equals(u.getMail())) {
+            if (user.getMail().equals(u.getMail())) { // quando o mail do user é igual ao do u, então o user é o objecto
+                                                      // a que queremos dar update
 
-                user.setListPubs(u.getListPubs());
-                user.setListDois(u.getListDois());
-                user.setTotalCitations(u.getTotalCitations());
+                // user.setListPubs(u.getListPubs());
+                // user.setListDois(u.getListDois());
+                // user.setTotalCitations(u.getTotalCitations());
+
+                user = u; // actualiza o user
 
             }
 
@@ -118,13 +127,17 @@ public class FileManagement implements Serializable {
 
     }
 
-    public void removePubs(ArrayList<Integer> DOIs) {
+    public void removePubs(ArrayList<Integer> DOIs) { // remove uma publicação do ArrayList pubs_list
 
-        for (int i = 0; i < DOIs.size(); i++) {
+        // A variável requerida por esta função DOIs é a lista com os DOIs das
+        // publicações a eliminar
 
-            for (int j = 0; j < pub_list.size(); j++) {
+        for (int i = 0; i < DOIs.size(); i++) { // percorre todos os doi na ArrayList pub_list
 
-                if (DOIs.get(i) == pub_list.get(j).getDOI()) {
+            for (int j = 0; j < pub_list.size(); j++) { // percorre todos os doi na ArrayList DOIs
+
+                if (DOIs.get(i) == pub_list.get(j).getDOI()) { // quando o valor do DOI for idêntico então elimina essa
+                                                               // pub da pub_list
                     pub_list.remove(j);
                 }
 
