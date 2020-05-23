@@ -346,7 +346,7 @@ public class ScholarClient {
 		int fails = 0;
 		System.out.println("=".repeat(20) + "Register:" + "=".repeat(20));
 
-		System.out.println("Name: (ex: Pires, Michel)");
+		System.out.println("Name: (lastname, firstname)");
 		System.out.print("==> ");
 		String name = scan.nextLine();
 
@@ -579,11 +579,11 @@ public class ScholarClient {
 
 				if (isNumber(str)) { // verifica que de facto é um número inteiro
 
-					if (Integer.parseInt(str) >= 0 && Integer.parseInt(str) <= stripedAnswers.length) { // vê se o
-																										// número está
-																										// dentro dos
-																										// limites
-																										// possiveis
+					if (Integer.parseInt(str) >= 0 && Integer.parseInt(str) <= myself.getListPubs().size()) { // vê se o
+						// número está
+						// dentro dos
+						// limites
+						// possiveis
 
 						itemsToRemove.add(Integer.parseInt(str)); // adiciona o indice na lista que contêm todos os
 																	// indices a remover
@@ -719,7 +719,7 @@ public class ScholarClient {
 																								// DOIs significa que
 																								// esta é uma candidacta
 
-				System.out.println(i + ") " + listOfPublications.get(i)); // faz print da publicação
+				System.out.println("\n" + i + ") " + listOfPublications.get(i)); // faz print da publicação
 				options.add(i); // adiciona o indice à lista de opções
 
 			}
@@ -731,7 +731,7 @@ public class ScholarClient {
 		}
 
 		else {
-			System.out.println("Choose what publications you want to add: (ex: 1,3,4)");
+			System.out.println("\nChoose what publications you want to add: (ex: 1,3,4)");
 			System.out.print("==> ");
 			String resposta = scan.nextLine();
 

@@ -143,11 +143,12 @@ public class ScholarImpl extends UnicastRemoteObject implements ScholarInterface
             // grande importância.
 
             user.removeUserPubs(DOIs);
+            fm.updateUserInfo(user); // faz o update do user na variavel user_list no objecto fm
 
         }
 
         fm.removePubs(DOIs); // remove as publicações da variável list_pubs do objecto fm
-        fm.updateUserInfo(myself); // faz o update do user na variavel user_list no objecto fm
+
     }
 
     public void saveInformation(ScholarInterface sch, User myself) {
