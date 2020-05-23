@@ -115,11 +115,9 @@ public class FileManagement {
             if (user.getMail().equals(u.getMail())) { // quando o mail do user é igual ao do u, então o user é o objecto
                                                       // a que queremos dar update
 
-                // user.setListPubs(u.getListPubs());
-                // user.setListDois(u.getListDois());
-                // user.setTotalCitations(u.getTotalCitations());
-
-                user = u; // actualiza o user
+                user.setListPubs(u.getListPubs());
+                user.setListDois(u.getListDois());
+                user.setTotalCitations(u.getTotalCitations());
 
             }
 

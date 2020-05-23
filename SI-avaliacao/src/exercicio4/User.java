@@ -191,10 +191,10 @@ public class User implements Serializable {
             }
         }
         // prints das estatisticas
-        System.out.println("/nThe author's stats are:");
+        System.out.println("\nThe author's stats are:");
         System.out.println("i10 = " + i10);
         System.out.println("H = " + H);
-        System.out.println("Total Citations = " + totalCitations + "/n");
+        System.out.println("Total Citations = " + totalCitations + "\n");
     }
 
     /**

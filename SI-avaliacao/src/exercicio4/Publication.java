@@ -152,8 +152,8 @@ public class Publication implements Serializable {
             print = print + string + "; ";
         }
 
-        print += titulo + ", " + String.valueOf(ano) + ", " + revista + ", " + volume + ", " + String.valueOf(numero)
-                + ", " + paginas + ", (Times Cited =" + citacoes + ").";
+        print += titulo + ", " + String.valueOf(ano) + ", " + revista + ", " + volume + "(" + String.valueOf(numero)
+                + "), " + paginas + ", (Times Cited = " + citacoes + ").";
 
         return print;
     }

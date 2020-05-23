@@ -75,6 +75,7 @@ public class ScholarClient {
 						try { // tenta usar o método addNewPublication(...) que está no obj sch
 
 							sch.writeToFiles(); // guarda as variáveis do objecto fm nos ficheiros préviamente criados
+
 							break;
 
 						} catch (IOException e) {
@@ -157,6 +158,7 @@ public class ScholarClient {
 
 					if (menu2.equals("1")) { // faz o print das pubs do User por ano Decrescente
 						myself.printPublications(true);
+
 					}
 
 					else if (menu2.equals("2")) { // faz o print das pubs do User por citações Decrescente
@@ -344,7 +346,7 @@ public class ScholarClient {
 		int fails = 0;
 		System.out.println("=".repeat(20) + "Register:" + "=".repeat(20));
 
-		System.out.println("Name: ");
+		System.out.println("Name: (ex: Pires, Michel)");
 		System.out.print("==> ");
 		String name = scan.nextLine();
 
@@ -353,7 +355,7 @@ public class ScholarClient {
 		System.out.println("Password: ");
 		System.out.print("==> ");
 		String password = scan.nextLine();
-		scan.nextLine();
+		// scan.nextLine();
 
 		System.out.println("Afiliações: ");
 		System.out.print("==> ");
@@ -552,8 +554,6 @@ public class ScholarClient {
 
 		if (myself.getListPubs() == null || myself.getListPubs().size() == 0) {
 
-			System.out.println("> You don't have any publications... Yet!");
-
 		}
 
 		else {
@@ -726,69 +726,78 @@ public class ScholarClient {
 
 		}
 
-		System.out.println("Choose what publications you want to add: (ex: 1,3,4)");
-		System.out.print("==> ");
-		String resposta = scan.nextLine();
-
-		String[] stripedAnswers = resposta.split(","); // cria um arraylist que a cada indice tem a posição da pub a
-														// remover (neste caso faz split por ",")
-
-		for (int i = 0; i < stripedAnswers.length; i++) {
-
-			if (stripedAnswers[i].substring(0, 1).equals(" ")) { // se o caracter começar com um espaço remove esse
-																	// espaço
-				str = stripedAnswers[i].substring(1);
-			} else {
-				str = stripedAnswers[i];
-			}
-
-			if (isNumber(str)) { // verifica que a string pode ser convertida num número
-
-				value = Integer.parseInt(str); // é o valor inteiro da string str
-
-				if (options.contains(value)) { // verifica se o número está nas opções (ou seja vê se a opção inserida é
-												// de uma publicação válida)
-
-					myself.addPublication(listOfPublications.get(value)); // adiciona esta nova pub
-
-				}
-
-			}
-
+		if (options.size() == 0) {
+			System.out.println("\n> There is no candidates");
 		}
 
-		while (true) {
+		else {
+			System.out.println("Choose what publications you want to add: (ex: 1,3,4)");
+			System.out.print("==> ");
+			String resposta = scan.nextLine();
 
-			try {
+			String[] stripedAnswers = resposta.split(","); // cria um arraylist que a cada indice tem a posição da pub a
+															// remover (neste caso faz split por ",")
 
-				sch.saveInformation(sch, myself);
+			for (int i = 0; i < stripedAnswers.length; i++) {
 
-				break;
-
-			} catch (IOException e) {
-
-				System.out.println("> Connection lost, I'll be back...");
-				fails++;
-				Thread.sleep(3000);
-
-				try {
-					Registry registry = LocateRegistry.getRegistry("localhost", 1099);
-					sch = (ScholarInterface) registry.lookup("Scholar");
-					sch.writeToFiles(); // tenta gravar os ficheiros (é uma maneira de tentar salvaguardar usuários que
-										// tenham problemas de conexão sem alterar a performance do programa)
-
-				} catch (Exception d) {
-					System.out.println("> Failed to establish connection");
+				if (stripedAnswers[i].substring(0, 1).equals(" ")) { // se o caracter começar com um espaço remove esse
+																		// espaço
+					str = stripedAnswers[i].substring(1);
+				} else {
+					str = stripedAnswers[i];
 				}
 
-			} catch (Exception idk) {
-				System.out.print("> An error has occurred: ");
-				idk.printStackTrace();
+				if (isNumber(str)) { // verifica que a string pode ser convertida num número
+
+					value = Integer.parseInt(str); // é o valor inteiro da string str
+
+					if (options.contains(value)) { // verifica se o número está nas opções (ou seja vê se a opção
+													// inserida é
+													// de uma publicação válida)
+
+						myself.addPublication(listOfPublications.get(value)); // adiciona esta nova pub
+
+					}
+
+				}
+
 			}
 
-			if (fails == 10) {
-				System.out.println("> Program terminated. Cause: Lost Connection with Server");
-				System.exit(0);
+			while (true) {
+
+				try {
+
+					sch.saveInformation(sch, myself);
+
+					break;
+
+				} catch (IOException e) {
+
+					System.out.println("> Connection lost, I'll be back...");
+					fails++;
+					Thread.sleep(3000);
+
+					try {
+						Registry registry = LocateRegistry.getRegistry("localhost", 1099);
+						sch = (ScholarInterface) registry.lookup("Scholar");
+						sch.writeToFiles(); // tenta gravar os ficheiros (é uma maneira de tentar salvaguardar usuários
+											// que
+											// tenham problemas de conexão sem alterar a performance do programa)
+
+					} catch (Exception d) {
+						System.out.println("> Failed to establish connection");
+					}
+
+				} catch (Exception idk) {
+					System.out.print("> An error has occurred: ");
+					idk.printStackTrace();
+				}
+
+				if (fails == 10) {
+					System.out.println("> Program terminated. Cause: Lost Connection with Server");
+					System.exit(0);
+				}
+
 			}
 
 		}
