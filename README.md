@@ -36,4 +36,12 @@ As Notas dos trabalhos foram as seguintes:
 
     }
 
-    Exame Normal ( ainda não sei a nota )
+    Exame Normal {
+    
+        Exercicio 1: 7.33 em 8;
+        
+        Exercicio 1: 4.67 em 6; ( não sei porque fui tão descontado )
+        
+        Exercicio 1: 6 em 6;
+        
+    }
