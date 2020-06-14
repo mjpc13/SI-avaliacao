@@ -40,7 +40,7 @@ As Notas dos trabalhos foram as seguintes:
     
         Exercicio 1: 7.33 em 8;
         
-        Exercicio 1: 4.67 em 6; ( não sei porque fui tão descontado )
+        Exercicio 1: 4.67 em 6;
         
         Exercicio 1: 6 em 6;
         
