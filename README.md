@@ -16,7 +16,7 @@ As Notas dos trabalhos foram as seguintes:
 
         Nota: 98%
 
-        Justificação: Nenhuma apresentada...
+        Justificação: Nenhuma apresentada.
 
     }
 
