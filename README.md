@@ -16,7 +16,6 @@ As Notas dos trabalhos foram as seguintes:
 
         Nota: 98%
 
-        Justificação: Nenhuma apresentada.
 
     }
 
@@ -32,7 +31,6 @@ As Notas dos trabalhos foram as seguintes:
 
         Nota: 100%
 
-        Justificação: Nenhuma justificação apresentada.
 
     }
 
