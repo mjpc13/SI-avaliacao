@@ -23,7 +23,7 @@ As Notas dos trabalhos foram as seguintes:
 
         Nota: 90%
 
-        Justificação: o Client era demasiado "Thin" era suposto fazer mais código no client. Nomeadamente dividir por blocos de if e entrar para certas zonas (tipo zona de pedir dados, zona de jogar, menu, etc...). Mas honestamente prefiro o meu código, pois é mais Universal e sem o meu Client tinha-me fodido no Exame Normal, por falta de tempo
+        Justificação: o Client era demasiado "Thin" era suposto fazer mais código no client. Nomeadamente dividir por blocos de if e entrar para certas zonas (tipo zona de pedir dados, zona de jogar, menu, etc...). Mas honestamente prefiro o meu código, pois é mais Universal e sem o meu Client tinha-me lixado no Exame Normal, por falta de tempo
 
     }
 
